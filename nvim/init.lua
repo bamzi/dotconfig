@@ -24,7 +24,7 @@ require('lv-autopairs')
 require('lv-which-key')
 require('lv-lsp-rooter')
 require('lv-zen')
-
+require('lv-symbols-outline')
 
 -- ME
 require('bam-bufferline')
@@ -75,4 +75,4 @@ require('lsp.vim-ls')
 require('lsp.vue-ls')
 require('lsp.yaml-ls')
 require('lsp.elixir-ls')
-
+require('lsp.cmake-ls')

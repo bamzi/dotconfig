@@ -78,4 +78,4 @@ alias gp='git push'
 alias gpo='git push -u origin'
 
 alias gocode="$GOPATH"
-alias raly="$HOME/dev/ralydev/raly"
+alias raly="$HOME/dev/raly/mono"

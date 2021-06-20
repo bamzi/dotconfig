@@ -188,19 +188,30 @@ return require("packer").startup(function(use)
         use {'iamcco/markdown-preview.nvim', run = 'cd app && npm install', opt = true}
         require_plugin('markdown-preview.nvim')
         use {'numToStr/FTerm.nvim', opt = true}
-        require_plugin('numToStr/FTerm.nvim')
+        require_plugin('FTerm.nvim')
         use {'monaqa/dial.nvim', opt = true}
         require_plugin('dial.nvim')
         use {'nacro90/numb.nvim', opt = true}
         require_plugin('numb.nvim')
-        use {'turbio/bracey.vim', opt = true}
+        use {'turbio/bracey.vim', run = 'npm install --prefix server', opt = true}
         require_plugin('bracey.vim')
+
+        use {'nvim-treesitter/playground', opt = true}
+        require_plugin('playground')
+        
         -- use {'phaazon/hop.nvim', opt = true}
         -- require_plugin('hop.nvim')
         use {'norcalli/nvim-colorizer.lua', opt = true}
         require_plugin('nvim-colorizer.lua')
         use {'windwp/nvim-spectre', opt = true}
         require_plugin('windwp/nvim-spectre')
+
+        use {'simrat39/symbols-outline.nvim', opt = true}
+        require_plugin('symbols-outline.nvim')
+        
+        use {"felipec/vim-sanegx"}
+        require_plugin('vim-sanegx')
+
         -- folke/todo-comments.nvim
         -- gennaro-tedesco/nvim-jqx
         -- TimUntersberger/neogit
