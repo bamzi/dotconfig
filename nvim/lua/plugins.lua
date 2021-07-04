@@ -64,11 +64,11 @@ return require("packer").startup(function(use)
     -- TODO remove when open on dir is supported by nvimtree
     -- use "kevinhwang91/rnvimr"
 
-    -- use {'lukas-reineke/indent-blankline.nvim', opt=true, branch = 'lua'}
+    use {'lukas-reineke/indent-blankline.nvim', opt=true}
     use {"lewis6991/gitsigns.nvim", opt = true}
     use {'f-person/git-blame.nvim', opt = true}
     use {"folke/which-key.nvim", opt = true}
-    use {"ChristianChiarulli/dashboard-nvim", opt = true}
+    -- use {"ChristianChiarulli/dashboard-nvim", opt = true}
     use {"windwp/nvim-autopairs", opt = true}
     use {"kevinhwang91/nvim-bqf", opt = true}
 
@@ -116,6 +116,8 @@ return require("packer").startup(function(use)
     use {"mhinz/vim-startify", opt = true}
     use {"rmagatti/auto-session", opt = true}
     use {"rmagatti/session-lens", opt = true}
+    use {"simrat39/rust-tools.nvim", opt = true}
+    use {"kdheepak/lazygit.nvim", opt = true}
 
     use {"https://github.com/ap/vim-css-color", opt = true}
 
@@ -139,7 +141,7 @@ return require("packer").startup(function(use)
     require_plugin("gitsigns.nvim")
     require_plugin("git-blame.nvim")
     require_plugin("which-key.nvim")
-    require_plugin("dashboard-nvim")
+    -- require_plugin("dashboard-nvim")
     require_plugin("nvim-autopairs")
     require_plugin("nvim-comment")
     require_plugin("nvim-bqf")
@@ -180,6 +182,9 @@ return require("packer").startup(function(use)
     require_plugin("vim-css-color")
     require_plugin("auto-session")
     require_plugin("session-lens")
+    require_plugin("rust-tools.nvim")
+    require_plugin("lazygit.nvim")
+    require_plugin("indent-blankline.nvim")
 
     -- Extras
     if O.extras then
@@ -211,6 +216,15 @@ return require("packer").startup(function(use)
         
         use {"felipec/vim-sanegx"}
         require_plugin('vim-sanegx')
+
+        use {"folke/todo-comments.nvim"}
+        require_plugin('todo-comments.nvim')
+        use {"folke/lsp-colors.nvim"}
+        require_plugin('lsp-colors.nvim')
+        use {"sindrets/diffview.nvim"}
+        require_plugin('diffview.nvim')
+
+        -- 
 
         -- folke/todo-comments.nvim
         -- gennaro-tedesco/nvim-jqx
