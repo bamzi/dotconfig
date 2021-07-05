@@ -1,6 +1,9 @@
-vim.o.completeopt = "menuone,noselect"
+local M = {}
 
-require'compe'.setup {
+vim.g.vsnip_snippet_dir = O.vnsip_dir
+
+M.config = function()
+opt = {
     enabled = O.auto_complete,
     autocomplete = true,
     debug = false,
@@ -21,7 +24,7 @@ require'compe'.setup {
         vsnip = {kind = "   (Snippet)"},
         nvim_lsp = {kind = "   (LSP)"},
         -- nvim_lua = {kind = "  "},
-		    nvim_lua = false,
+		nvim_lua = false,
         spell = {kind = "   (Spell)"},
         tags = false,
         vim_dadbod_completion = true,
@@ -33,79 +36,11 @@ require'compe'.setup {
     }
 }
 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- ﬘
--- 
--- 
--- 
--- m
--- 
--- 
--- 
--- 
-
--- local t = function(str)
---     return vim.api.nvim_replace_termcodes(str, true, true, true)
+-- if O.plugin.tabnine.active then
+    opt.source.tabnine = {kind = " ", priority=200, max_reslts=6}
 -- end
 
--- local check_back_space = function()
---     local col = vim.fn.col('.') - 1
---     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
---         return true
---     else
---         return false
---     end
--- end
-
--- -- Use (s-)tab to:
--- --- move to prev/next item in completion menuone
--- --- jump to prev/next snippet's placeholder
--- _G.tab_complete = function()
---     if vim.fn.pumvisible() == 1 then
---         return t "<C-n>"
---     elseif vim.fn.call("vsnip#available", {1}) == 1 then
---         return t "<Plug>(vsnip-expand-or-jump)"
---     elseif check_back_space() then
---         return t "<Tab>"
---     else
---         return vim.fn['compe#complete']()
---     end
--- end
--- _G.s_tab_complete = function()
---     if vim.fn.pumvisible() == 1 then
---         return t "<C-p>"
---     elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
---         return t "<Plug>(vsnip-jump-prev)"
---     else
---         return t "<S-Tab>"
---     end
--- end
-
--- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-
-
-
-
-
+require'compe'.setup(opt)
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -134,6 +69,7 @@ _G.tab_complete = function()
     return vim.fn['compe#complete']()
   end
 end
+
 _G.s_tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t "<C-p>"
@@ -144,7 +80,17 @@ _G.s_tab_complete = function()
   end
 end
 
+
 vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", {noremap = true, silent = true, expr = true})
+vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm('<CR>')", {noremap = true, silent = true, expr = true})
+vim.api.nvim_set_keymap("i", "<C-e>", "compe#close('<C-e>')", {noremap = true, silent = true, expr = true})
+vim.api.nvim_set_keymap("i", "<C-f>", "compe#scroll({ 'delta': +4 })", {noremap = true, silent = true, expr = true})
+vim.api.nvim_set_keymap("i", "<C-d>", "compe#scroll({ 'delta': -4 })", {noremap = true, silent = true, expr = true})
+end
+
+return M

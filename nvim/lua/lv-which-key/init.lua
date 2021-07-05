@@ -86,6 +86,28 @@ local mappings = {
     ["f"] = "Telescope",
     ["ESC+ESC"] = "No Highlight",
     ["p"] = "Projects",
+    b = {
+        name = "Buffers",
+        j = {"<cmd>BufferPick<cr>", "jump to buffer"},
+        f = {"<cmd>Snap buffers<cr>" or "<cmd>Telescope buffers<cr>", "Find buffer"},
+        w = {"<cmd>BufferWipeout<cr>", "wipeout buffer"},
+        e = {
+            "<cmd>BufferCloseAllButCurrent<cr>", "close all but current buffer"
+        },
+        h = {"<cmd>BufferCloseBuffersLeft<cr>", "close all buffers to the left"},
+        l = {
+            "<cmd>BufferCloseBuffersRight<cr>",
+            "close all BufferLines to the right"
+        },
+        D = {
+            "<cmd>BufferOrderByDirectory<cr>",
+            "sort BufferLines automatically by directory"
+        },
+        L = {
+            "<cmd>BufferOrderByLanguage<cr>",
+            "sort BufferLines automatically by language"
+        }
+    },
     d = {
         name = "+Diagnostics",
         t = {"<cmd>TroubleToggle<cr>", "trouble"},
@@ -104,19 +126,40 @@ local mappings = {
         r = {"<cmd>DebugToggleRepl<cr>", "Toggle Repl"},
         s = {"<cmd>DebugStart<cr>", "Start"}
     },
+    -- g = {
+    --     name = "+Git",
+    --     j = {"<cmd>NextHunk<cr>", "Next Hunk"},
+    --     k = {"<cmd>PrevHunk<cr>", "Prev Hunk"},
+    --     p = {"<cmd>PreviewHunk<cr>", "Preview Hunk"},
+    --     r = {"<cmd>ResetHunk<cr>", "Reset Hunk"},
+    --     R = {"<cmd>ResetBuffer<cr>", "Reset Buffer"},
+    --     s = {"<cmd>StageHunk<cr>", "Stage Hunk"},
+    --     u = {"<cmd>UndoStageHunk<cr>", "Undo Stage Hunk"},
+    --     o = {"<cmd>Telescope git_status<cr>", "Open changed file"},
+    --     b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
+    --     c = {"<cmd>Telescope git_commits<cr>", "Checkout commit"},
+    --     C = {"<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)"},
+    -- },
     g = {
-        name = "+Git",
-        j = {"<cmd>NextHunk<cr>", "Next Hunk"},
-        k = {"<cmd>PrevHunk<cr>", "Prev Hunk"},
-        p = {"<cmd>PreviewHunk<cr>", "Preview Hunk"},
-        r = {"<cmd>ResetHunk<cr>", "Reset Hunk"},
-        R = {"<cmd>ResetBuffer<cr>", "Reset Buffer"},
-        s = {"<cmd>StageHunk<cr>", "Stage Hunk"},
-        u = {"<cmd>UndoStageHunk<cr>", "Undo Stage Hunk"},
+        name = "Git",
+        j = {"<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk"},
+        k = {"<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk"},
+        l = {"<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame"},
+        p = {"<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk"},
+        r = {"<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk"},
+        R = {"<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer"},
+        s = {"<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk"},
+        u = {
+            "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
+            "Undo Stage Hunk"
+        },
         o = {"<cmd>Telescope git_status<cr>", "Open changed file"},
         b = {"<cmd>Telescope git_branches<cr>", "Checkout branch"},
         c = {"<cmd>Telescope git_commits<cr>", "Checkout commit"},
-        C = {"<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)"},
+        C = {
+            "<cmd>Telescope git_bcommits<cr>",
+            "Checkout commit(for current file)"
+        }
     },
     l = {
         name = "+LSP",
@@ -149,6 +192,15 @@ local mappings = {
         R = {"<cmd>Telescope registers<cr>", "Registers"},
         t = {"<cmd>Telescope live_grep<cr>", "Text"}
     },
+    m = {
+        name = "FloaTerm",
+        b = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 btm<CR>", "BTM"},
+        d = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazydocker<CR>", "Lazydocker"},
+        g = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>", "Lazygit"},
+        n = {"<CMD>FloatermNew --autoclose=2 --height=0.5 --width=0.5 nnn -Hde<CR>", "NNN"},
+        z = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>", "ZSH Terminal"},
+        t = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 taskwarrior-tui<CR>", "Taskwarrior"}
+    },
     s = {
         name = "+Session",
         s = {"<CMD>SaveSession<CR>", "Save Session"},
@@ -158,6 +210,10 @@ local mappings = {
     },
     -- S = {name = "+Session", s = {"<cmd>SessionSave<cr>", "Save Session"}, l = {"<cmd>SessionLoad<cr>", "Load Session"}},
 
+    T = {
+        name = "Treesitter",
+        i = {":TSConfigInfo<cr>", "Info"}
+    },
     -- extras
     z = {
         name = "+Zen",
@@ -166,6 +222,26 @@ local mappings = {
         z = {"<cmd>TZAtaraxis<cr>", "toggle zen"},
     }
 }
+
+
+
+vim.api.nvim_set_keymap("n", "<leader>Th",
+                        ":TSHighlightCapturesUnderCursor<CR>",
+                        {noremap = true, silent = true})
+mappings[""] = "Highlight Capture"
+
+-- vim.api.nvim_set_keymap("n", "<leader>gg", ":LazyGit<CR>",
+--                         {noremap = true, silent = true})
+-- mappings["gg"] = "LazyGit"
+
+
+vim.api.nvim_set_keymap('n', '<leader>p',
+                            ":lua require'telescope'.extensions.project.project{}<CR>",
+                            {noremap = true, silent = true})
+mappings["p"] = "Projects"
+
+
+
 
 local wk = require("which-key")
 wk.register(mappings, opts)

@@ -84,7 +84,7 @@ return require("packer").startup(function(use)
     use {"kyazdani42/nvim-web-devicons", opt = true}
 
     -- Status Line and Bufferline
-    --use {"glepnir/galaxyline.nvim", opt = true}
+    use {"glepnir/galaxyline.nvim", opt = true}
     --use {"romgrk/barbar.nvim", opt = true}
 
     -- Zen Mode
@@ -148,7 +148,7 @@ return require("packer").startup(function(use)
     -- require_plugin("nvcode-color-schemes.vim")
     require_plugin("gruvbox-community/gruvbox")
     require_plugin("nvim-web-devicons")
-    --require_plugin("galaxyline.nvim")
+    require_plugin("galaxyline.nvim")
     --require_plugin("barbar.nvim")
     require_plugin('lsp-rooter.nvim')
     require_plugin("TrueZen.nvim")
@@ -187,7 +187,6 @@ return require("packer").startup(function(use)
     require_plugin("indent-blankline.nvim")
 
     -- Extras
-    if O.extras then
         use {'metakirby5/codi.vim', opt = true}
         require_plugin('codi.vim')
         use {'iamcco/markdown-preview.nvim', run = 'cd app && npm install', opt = true}
@@ -209,7 +208,7 @@ return require("packer").startup(function(use)
         use {'norcalli/nvim-colorizer.lua', opt = true}
         require_plugin('nvim-colorizer.lua')
         use {'windwp/nvim-spectre', opt = true}
-        require_plugin('windwp/nvim-spectre')
+        require_plugin('nvim-spectre')
 
         use {'simrat39/symbols-outline.nvim', opt = true}
         require_plugin('symbols-outline.nvim')
@@ -240,6 +239,5 @@ return require("packer").startup(function(use)
         -- Easily Create Gists
         -- use {'mattn/vim-gist', opt = true}
         -- use {'mattn/webapi-vim', opt = true}
-    end
 
 end)
