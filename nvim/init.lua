@@ -1,17 +1,33 @@
+-- vim.cmd [[
+--   set packpath-=~/.config/nvim
+--   set packpath-=~/.config/nvim/after
+--   set packpath-=~/.local/share/nvim/site
+
+--   set runtimepath-=~/.config/nvim
+--   set runtimepath-=~/.config/nvim/after
+-- ]]
+-- vim.opt.rtp:append() instead of vim.cmd ?
 require "default-config"
+local status_ok, error = pcall(vim.cmd, "luafile ~/.config/nvim/lv-config.lua")
+if not status_ok then
+  print "something is wrong with your lv-config"
+  print(error)
+end
+
 require "keymappings"
-vim.cmd("luafile " .. CONFIG_PATH .. "/lv-config.lua")
+
+local plugins = require "plugins"
+local plugin_loader = require("plugin-loader").init()
+plugin_loader:load { plugins, O.user_plugins }
+vim.g.colors_name = O.colorscheme -- Colorscheme must get called after plugins are loaded or it will break new installs.
+
 require "settings"
-require "plugins"
 require "lv-utils"
-require "lv-galaxyline"
-require "lv-treesitter"
-require "lv-which-key"
-require "lv-neoformat"
-require "lsp"
-if O.lang.emmet.active then
-  require "lsp.emmet-ls"
-end
-if O.lang.tailwindcss.active then
-  require "lsp.tailwindcss-ls"
-end
+
+-- TODO: these guys need to be in language files
+-- require "lsp"
+-- if O.lang.emmet.active then
+--   require "lsp.emmet-ls"
+-- end
+-- if O.lang.tailwindcss.active then
+--   require "lsp.tailwind
