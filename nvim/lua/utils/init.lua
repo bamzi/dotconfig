@@ -88,10 +88,10 @@ function utils.toggle_autoformat()
 end
 
 function utils.reload_lv_config()
-  vim.cmd "source ~/.local/share/lunarvim/lvim/lua/settings.lua"
+  vim.cmd "source ~/.config/nvim/lua/settings.lua"
   vim.cmd("source " .. USER_CONFIG_PATH)
   require("keymappings").setup() -- this should be done before loading the plugins
-  vim.cmd "source ~/.local/share/lunarvim/lvim/lua/plugins.lua"
+  vim.cmd "source ~/.config/nvim/lua/plugins.lua"
   local plugins = require "plugins"
   local plugin_loader = require("plugin-loader").init()
   utils.toggle_autoformat()

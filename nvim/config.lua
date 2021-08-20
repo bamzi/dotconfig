@@ -5,6 +5,7 @@ TERMINAL = vim.fn.expand "$TERMINAL"
 USER = vim.fn.expand "$USER"
 vim.cmd [[ set spellfile=~/.config/nvim/spell/en.utf-8.add ]]
 
+
 lvim = {
   leader = "space",
   colorscheme = "bamzi",
@@ -31,7 +32,7 @@ lvim = {
     -- gitsigns = {},
     -- which_key = {},
     -- comment = {},
-    -- project = {},
+    -- project = {active = true},
     -- galaxyline = {},
     -- bufferline = {},
     -- dap = {},
@@ -56,28 +57,30 @@ lvim = {
     gitsigns = {active = true},
     which_key = {
       active = true,
-      m = {
-        name = "FloaTerm",
-        b = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 btm<CR>", "BTM"},
-        d = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazydocker<CR>", "Lazydocker"},
-        g = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>", "Lazygit"},
-        n = {"<CMD>FloatermNew --autoclose=2 --height=0.5 --width=0.5 nnn -Hde<CR>", "NNN"},
-        z = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>", "ZSH Terminal"},
-        t = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 taskwarrior-tui<CR>", "Taskwarrior"},
-        m = {"<CMD>HopChar1<CR>", "Hop Char 1"},
-        M = {"<CMD>HopChar2<CR>", "Hop Char 2"},
-        p = {"<CMD>HopPattern<CR>", "Hop Pattern"},
-        l = {"<CMD>HopLine<CR>", "Hop Line"},
-        w = {"<CMD>HopWord<CR>", "Hop Word"}
+      mappings = {
+        m = {
+          name = "FloaTerm",
+          b = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 btm<CR>", "BTM"},
+          d = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazydocker<CR>", "Lazydocker"},
+          g = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>", "Lazygit"},
+          n = {"<CMD>FloatermNew --autoclose=2 --height=0.5 --width=0.5 nnn -Hde<CR>", "NNN"},
+          z = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>", "ZSH Terminal"},
+          t = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 taskwarrior-tui<CR>", "Taskwarrior"},
+          m = {"<CMD>HopChar1<CR>", "Hop Char 1"},
+          M = {"<CMD>HopChar2<CR>", "Hop Char 2"},
+          p = {"<CMD>HopPattern<CR>", "Hop Pattern"},
+          l = {"<CMD>HopLine<CR>", "Hop Line"},
+          w = {"<CMD>HopWord<CR>", "Hop Word"},
         },
+      },
     },
     comment = {active = true},
     rooter = {active = true},
     galaxyline = {active = true},
     bufferline = {active = true},
     dap = {active = true},
-    dashboard = {},
-    terminal = {},
+    dashboard = {active = false},
+    terminal = {active = false},
     zen = {active = true},
   },
 
@@ -1491,6 +1494,7 @@ lvim.lang = {
 }
 
 require("keymappings").config()
+require("mymaps").start()
 require("core.which-key").config()
 require "core.status_colors"
 require("core.gitsigns").config()
@@ -1505,3 +1509,5 @@ require("core.project").config()
 require("core.bufferline").config()
 require("core.autopairs").config()
 require("core.comment").config()
+
+

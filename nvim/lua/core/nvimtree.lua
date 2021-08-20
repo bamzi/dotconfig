@@ -14,7 +14,7 @@ M.config = function()
       tree_width = 30,
     },
     ignore = { ".git", "node_modules", ".cache" },
-    auto_open = 1,
+    auto_open = 0,
     auto_close = 1,
     quit_on_open = 0,
     follow = 1,

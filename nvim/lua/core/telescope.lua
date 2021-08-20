@@ -120,6 +120,7 @@ function M.setup()
   end
   telescope.setup(lvim.builtin.telescope)
   if lvim.builtin.project.active then
+    pcall(require("telescope").load_extension, "fzy_native")
     pcall(require("telescope").load_extension, "projects")
   end
 end

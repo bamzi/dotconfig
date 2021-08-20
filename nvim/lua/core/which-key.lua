@@ -225,6 +225,23 @@ M.config = function()
         name = "Treesitter",
         i = { ":TSConfigInfo<cr>", "Info" },
       },
+      m = {
+        name = "FloaTerm",
+        b = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 btm<CR>", "BTM"},
+        d = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazydocker<CR>", "Lazydocker"},
+        g = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>", "Lazygit"},
+        n = {"<CMD>FloatermNew --autoclose=2 --height=0.5 --width=0.5 nnn -Hde<CR>", "NNN"},
+        z = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>", "ZSH Terminal"},
+        t = {"<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 taskwarrior-tui<CR>", "Taskwarrior"},
+      },
+      v = {
+        name = "Hop",
+        1 = {"<CMD>HopChar1<CR>", "Hop Char 1"},
+        2 = {"<CMD>HopChar2<CR>", "Hop Char 2"},
+        p = {"<CMD>HopPattern<CR>", "Hop Pattern"},
+        l = {"<CMD>HopLine<CR>", "Hop Line"},
+        w = {"<CMD>HopWord<CR>", "Hop Word"},
+      },
     },
   }
 end
