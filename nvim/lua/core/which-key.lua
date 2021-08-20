@@ -236,8 +236,8 @@ M.config = function()
       },
       v = {
         name = "Hop",
-        1 = {"<CMD>HopChar1<CR>", "Hop Char 1"},
-        2 = {"<CMD>HopChar2<CR>", "Hop Char 2"},
+        ["1"] = {"<CMD>HopChar1<CR>", "Hop Char 1"},
+        ["2"] = {"<CMD>HopChar2<CR>", "Hop Char 2"},
         p = {"<CMD>HopPattern<CR>", "Hop Pattern"},
         l = {"<CMD>HopLine<CR>", "Hop Line"},
         w = {"<CMD>HopWord<CR>", "Hop Word"},
