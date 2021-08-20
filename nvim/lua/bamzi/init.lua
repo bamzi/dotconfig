@@ -9,6 +9,17 @@ vim.g.colors_name = "bamzi"
 local util = require "bamzi.util"
 Config = require "bamzi.config"
 C = require "bamzi.palette"
+
+local async
+async = vim.loop.new_async(vim.schedule_wrap(function()
+  local skeletons = {}
+  for _, skeleton in ipairs(skeletons) do
+    util.initialise(skeleton)
+  end
+
+  async:close()
+end))
+
 local highlights = require "bamzi.highlights"
 local Treesitter = require "bamzi.Treesitter"
 local markdown = require "bamzi.markdown"
@@ -28,3 +39,5 @@ local skeletons = {
 for _, skeleton in ipairs(skeletons) do
   util.initialise(skeleton)
 end
+
+async:send()
