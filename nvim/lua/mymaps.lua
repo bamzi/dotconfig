@@ -25,7 +25,8 @@ M.start = function()
   -- Builtin
   map('n', '<leader>fe', ':Telescope file_browser cwd=vim.fn.expand("%:p:h")<CR>', teleOptions)
   map('n', '<leader>fg', ':Telescope git_files<CR>', teleOptions)
-  map('n', '<C-f>', ':Telescope find_files hidden=true<CR>', teleOptions) -- 
+  map('n', '<leader>ff', ':Telescope find_files hidden=true<CR>', teleOptions)
+  map('n', '<C-f>', ':Telescope git_files hidden=true<CR>', teleOptions) -- 
   map('n', '<leader>fl', ':Telescope live_grep<CR>', teleOptions)
   map('n', '<leader>fb', ':Telescope buffers<CR>', teleOptions)
   map('n', '<leader>fh', ':Telescope help_tags<CR>', teleOptions)

@@ -2,6 +2,15 @@ return {
   -- Packer can manage itself as an optional plugin
   { "wbthomason/packer.nvim" },
   { "neovim/nvim-lspconfig" },
+  {
+    "junegunn/fzf",
+    config = function()
+      vim.cmd [[
+        fzf#install()
+      ]]
+    end,
+},
+  {"junegunn/fzf.vim"},
   { "tamago324/nlsp-settings.nvim" },
   { "jose-elias-alvarez/null-ls.nvim" },
   {
