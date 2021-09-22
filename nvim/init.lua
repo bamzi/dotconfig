@@ -1,79 +1,50 @@
--- vim.cmd [[
---   set packpath-=~/.config/nvim
---   set packpath-=~/.config/nvim/after
---   set packpath-=~/.local/share/nvim/site
-  
---   set runtimepath-=~/.config/nvim
---   set runtimepath-=~/.config/nvim/after
---   ]]
-  -- set packpath^=~/.local/share/lunarvim/site
-  -- set packpath^=~/.config/lvim
-  -- set runtimepath+=~/.config/lvim
-  -- set runtimepath^=~/.local/share/lunarvim/lvim/after
--- vim.opt.rtp:append() instead of vim.cmd ?
-
-local function file_exists(name)
-  local f = io.open(name, "r")
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
-end
-
--- local lvim_path = os.getenv "HOME" .. "/.config/lvim/"
-local lvim_path = vim.fn.stdpath "config"
-USER_CONFIG_PATH = lvim_path .. "/config.lua"
-local config_exist = file_exists(USER_CONFIG_PATH)
-if not config_exist then
-  USER_CONFIG_PATH = lvim_path .. "/config.lua"
-  print "Rename ~/.config/lvim/lv-config.lua to config.lua"
-end
-
-require "default-config"
-local autocmds = require "core.autocmds"
-require("settings").load_options()
-
-local status_ok, error = pcall(vim.cmd, "luafile " .. USER_CONFIG_PATH)
-if not status_ok then
-  print("something is wrong with your " .. USER_CONFIG_PATH)
-  print(error)
-end
-require("settings").load_commands()
-autocmds.define_augroups(lvim.autocommands)
+CONFIG_PATH = vim.fn.stdpath "config"
+DATA_PATH = vim.fn.stdpath "data"
+CACHE_PATH = vim.fn.stdpath "cache"
+TERMINAL = vim.fn.expand "$TERMINAL"
 
 local plugins = require "plugins"
 local plugin_loader = require("plugin-loader").init()
-plugin_loader:load { plugins, lvim.plugins }
-vim.g.colors_name = lvim.colorscheme -- Colorscheme must get called after plugins are loaded or it will break new installs.
-vim.cmd("colorscheme " .. lvim.colorscheme)
+plugin_loader:load { plugins }
 
-local utils = require "utils"
-utils.toggle_autoformat()
-local commands = require "core.commands"
-commands.load(commands.defaults)
-
-require("lsp").config()
-
-local null_status_ok, null_ls = pcall(require, "null-ls")
-if null_status_ok then
-  null_ls.config {}
-  require("lspconfig")["null-ls"].setup(lvim.lsp.null_ls.setup)
-end
-
-local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
-if lsp_settings_status_ok then
-  lsp_settings.setup {
-    config_home = os.getenv "HOME" .. "/.config/nvim/lsp-settings",
-  }
-end
-
+mykeys = {}
 require("keymappings").setup()
+require("mymaps").start()
 
--- TODO: these guys need to be in language files
--- if lvim.lang.emmet.active then
---   require "lsp.emmet-ls"
--- end
--- if lvim.lang.tailwindcss.active then
---   require "lsp.tailwind
+whichkeys = {}
+
+local autocmds = require "core.autocmds"
+require("settings").load_options()
+
+color_theme = "bamzi"
+vim.cmd("colorscheme " .. color_theme)
+
+require("core.which-key").config()   
+require "core.status_colors"  
+require("core.gitsigns").config()
+require("core.compe").config()
+require("core.dap").config()
+-- require("core.terminal").config()
+require("core.telescope").config()
+require("core.treesitter").config()
+require("core.nvimtree").config()
+require("core.project").config()
+require("core.bufferline").config()
+require("core.autopairs").config()
+require("core.comment").config()
+
+require("lspconfigx")
+require("lsp").config()
+require("lsp").setup("go")
+require("lsp").setup("javascript")
+require("lsp").setup("typescript")
+require("lsp").setup("html")
+require("lsp").setup("css")
+require("lsp").setup("json")
+require("lsp").setup("docker")
+require("lsp").setup("yaml")
+require("lsp").setup("sh")
+-- require("lsp").setup("zsh")
+require("lsp").setup("lua")
+require("lsp").setup("svelte")
+require("lsp").setup("terraform")

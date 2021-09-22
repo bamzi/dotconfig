@@ -63,11 +63,11 @@ function M.list_configured(formatter_configs)
 end
 
 function M.setup(filetype, options)
-  if not lvim.lang[filetype] or (formatters_by_ft[filetype] and not options.force_reload) then
+  if not lspconfigx.lang[filetype] or (formatters_by_ft[filetype] and not options.force_reload) then
     return
   end
 
-  formatters_by_ft[filetype] = M.list_configured(lvim.lang[filetype].formatters)
+  formatters_by_ft[filetype] = M.list_configured(lspconfigx.lang[filetype].formatters)
   null_ls.register { sources = formatters_by_ft[filetype].supported }
 end
 

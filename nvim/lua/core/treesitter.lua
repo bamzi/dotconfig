@@ -1,9 +1,10 @@
 local M = {}
 local Log = require "core.log"
+local ts_configs = {}
 M.config = function()
-  lvim.builtin.treesitter = {
-    ensure_installed = {}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    ignore_install = {},
+  ts_configs = {
+    ensure_installed = {all}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ignore_install = {haskell},
     matchup = {
       enable = false, -- mandatory, false will disable the whole extension
       -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
@@ -69,7 +70,7 @@ M.setup = function()
     return
   end
 
-  treesitter_configs.setup(lvim.builtin.treesitter)
+  treesitter_configs.setup(ts_configs)
 end
 
 return M

@@ -73,7 +73,7 @@ alias ll='ls -alF'
 # GIT Aliases
 alias gs='git status'
 alias ga='git add -A'
-alias gc='git commit -m '
+alias gc='git commit'
 alias gp='git push'
 alias gpo='git push -u origin'
 

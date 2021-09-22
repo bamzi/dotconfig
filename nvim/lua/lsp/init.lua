@@ -2,9 +2,9 @@ local M = {}
 local Log = require "core.log"
 
 function M.config()
-  vim.lsp.protocol.CompletionItemKind = lvim.lsp.completion.item_kind
+  vim.lsp.protocol.CompletionItemKind = lspconfigx.lsp.completion.item_kind
 
-  for _, sign in ipairs(lvim.lsp.diagnostics.signs.values) do
+  for _, sign in ipairs(lspconfigx.lsp.diagnostics.signs.values) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
 
@@ -12,7 +12,7 @@ function M.config()
 end
 
 local function lsp_highlight_document(client)
-  if lvim.lsp.document_highlight == false then
+  if lspconfigx.lsp.document_highlight == false then
     return -- we don't need further
   end
   -- Set autocommands conditional on server_capabilities
@@ -97,13 +97,13 @@ function M.get_ls_capabilities(client_id)
 end
 
 function M.common_on_init(client, bufnr)
-  if lvim.lsp.on_init_callback then
-    lvim.lsp.on_init_callback(client, bufnr)
+  if lspconfigx.lsp.on_init_callback then
+    lspconfigx.lsp.on_init_callback(client, bufnr)
     Log:get_default().info "Called lsp.on_init_callback"
     return
   end
 
-  local formatters = lvim.lang[vim.bo.filetype].formatters
+  local formatters = lspconfigx.lang[vim.bo.filetype].formatters
   if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
     client.resolved_capabilities.document_formatting = false
     Log:get_default().info(
@@ -113,8 +113,8 @@ function M.common_on_init(client, bufnr)
 end
 
 function M.common_on_attach(client, bufnr)
-  if lvim.lsp.on_attach_callback then
-    lvim.lsp.on_attach_callback(client, bufnr)
+  if lspconfigx.lsp.on_attach_callback then
+    lspconfigx.lsp.on_attach_callback(client, bufnr)
     Log:get_default().info "Called lsp.on_init_callback"
   end
   lsp_highlight_document(client)
@@ -124,12 +124,12 @@ end
 
 function M.setup(lang)
   local lsp_utils = require "lsp.utils"
-  local lsp = lvim.lang[lang].lsp
+  local lsp = lspconfigx.lang[lang].lsp
   if lsp_utils.is_client_active(lsp.provider) then
     return
   end
 
-  local overrides = lvim.lsp.override
+  local overrides = lspconfigx.lsp.override
   if type(overrides) == "table" then
     if vim.tbl_contains(overrides, lang) then
       return
@@ -137,8 +137,8 @@ function M.setup(lang)
   end
 
   if lsp.provider ~= nil and lsp.provider ~= "" then
-    local lspconfig = require "lspconfig"
-    lspconfig[lsp.provider].setup(lsp.setup)
+    local lspc = require "lspconfig"
+    lspc[lsp.provider].setup(lsp.setup)
   end
 end
 

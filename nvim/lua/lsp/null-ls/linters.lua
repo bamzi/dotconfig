@@ -63,11 +63,11 @@ function M.list_configured(linter_configs)
 end
 
 function M.setup(filetype, options)
-  if not lvim.lang[filetype] or (linters_by_ft[filetype] and not options.force_reload) then
+  if not lspconfigx.lang[filetype] or (linters_by_ft[filetype] and not options.force_reload) then
     return
   end
 
-  linters_by_ft[filetype] = M.list_configured(lvim.lang[filetype].linters)
+  linters_by_ft[filetype] = M.list_configured(lspconfigx.lang[filetype].linters)
   null_ls.register { sources = linters_by_ft[filetype].supported }
 end
 

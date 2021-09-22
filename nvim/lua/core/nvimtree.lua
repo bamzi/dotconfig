@@ -1,8 +1,9 @@
 local M = {}
 local Log = require "core.log"
 --
+local tree_config = {}
 M.config = function()
-  lvim.builtin.nvimtree = {
+  tree_config = {
     active = true,
     side = "left",
     width = 30,
@@ -56,15 +57,13 @@ M.setup = function()
   end
   local g = vim.g
 
-  for opt, val in pairs(lvim.builtin.nvimtree) do
+  for opt, val in pairs(tree_config) do
     g["nvim_tree_" .. opt] = val
   end
 
   -- Implicitly update nvim-tree when project module is active
-  if lvim.builtin.project.active then
     vim.g.nvim_tree_update_cwd = 1
     vim.g.nvim_tree_respect_buf_cwd = 1
-  end
 
   local tree_cb = nvim_tree_config.nvim_tree_callback
 
@@ -101,9 +100,9 @@ M.focus_or_close = function()
     end
   else
     view.open()
-    if package.loaded["bufferline.state"] and lvim.builtin.nvimtree.side == "left" then
-      -- require'bufferline.state'.set_offset(lvim.builtin.nvimtree.width + 1, 'File Explorer')
-      require("bufferline.state").set_offset(lvim.builtin.nvimtree.width + 1, "")
+    if package.loaded["bufferline.state"] and tree_config.side == "left" then
+      -- require'bufferline.state'.set_offset(tree_config.width + 1, 'File Explorer')
+      require("bufferline.state").set_offset(tree_config.width + 1, "")
     end
   end
 end
@@ -119,9 +118,9 @@ M.toggle_tree = function()
       require("bufferline.state").set_offset(0)
     end
   else
-    if package.loaded["bufferline.state"] and lvim.builtin.nvimtree.side == "left" then
-      -- require'bufferline.state'.set_offset(lvim.builtin.nvimtree.width + 1, 'File Explorer')
-      require("bufferline.state").set_offset(lvim.builtin.nvimtree.width + 1, "")
+    if package.loaded["bufferline.state"] and tree_config.side == "left" then
+      -- require'bufferline.state'.set_offset(tree_config.width + 1, 'File Explorer')
+      require("bufferline.state").set_offset(tree_config.width + 1, "")
     end
     require("nvim-tree").toggle()
   end

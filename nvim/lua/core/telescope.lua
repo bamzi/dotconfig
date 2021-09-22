@@ -5,7 +5,7 @@ function M.config()
     return
   end
 
-  lvim.builtin.telescope = {
+  teles = {
     ---@usage disable telescope completely [not recommeded]
     active = true,
     defaults = {
@@ -77,40 +77,6 @@ function M.config()
   }
 end
 
-function M.find_lunarvim_files(opts)
-  opts = opts or {}
-  local themes = require "telescope.themes"
-  local theme_opts = themes.get_ivy {
-    previewer = false,
-    sorting_strategy = "ascending",
-    layout_strategy = "bottom_pane",
-    layout_config = {
-      height = 5,
-      width = 0.5,
-    },
-    prompt = ">> ",
-    prompt_title = "~ LunarVim files ~",
-    cwd = CONFIG_PATH,
-    find_command = { "git", "ls-files" },
-  }
-  opts = vim.tbl_deep_extend("force", theme_opts, opts)
-  require("telescope.builtin").find_files(opts)
-end
-
-function M.grep_lunarvim_files(opts)
-  opts = opts or {}
-  local themes = require "telescope.themes"
-  local theme_opts = themes.get_ivy {
-    sorting_strategy = "ascending",
-    layout_strategy = "bottom_pane",
-    prompt = ">> ",
-    prompt_title = "~ search LunarVim ~",
-    cwd = CONFIG_PATH,
-  }
-  opts = vim.tbl_deep_extend("force", theme_opts, opts)
-  require("telescope.builtin").live_grep(opts)
-end
-
 function M.setup()
   local status_ok, telescope = pcall(require, "telescope")
   if not status_ok then
@@ -118,11 +84,9 @@ function M.setup()
     Log:get_default().error "Failed to load telescope"
     return
   end
-  telescope.setup(lvim.builtin.telescope)
-  if lvim.builtin.project.active then
+  telescope.setup(teles)
     pcall(require("telescope").load_extension, "fzy_native")
     pcall(require("telescope").load_extension, "projects")
-  end
 end
 
 return M

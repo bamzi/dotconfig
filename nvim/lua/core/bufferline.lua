@@ -1,7 +1,7 @@
 local M = {}
-
+local bufferline_config = {}
 M.config = function()
-  lvim.builtin.bufferline = {
+  bufferline_config = {
     active = true,
     keymap = {
       normal_mode = {
@@ -14,7 +14,7 @@ end
 
 M.setup = function()
   local keymap = require "keymappings"
-  keymap.append_to_defaults(lvim.builtin.bufferline.keymap)
+  keymap.append_to_defaults(bufferline_config.keymap)
 end
 
 return M

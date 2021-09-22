@@ -8,11 +8,8 @@ return {
     "kabouzeid/nvim-lspinstall",
     event = "VimEnter",
     config = function()
-      local lspinstall = require "lspinstall"
-      lspinstall.setup()
-      if lvim.builtin.lspinstall.on_config_done then
-        lvim.builtin.lspinstall.on_config_done(lspinstall)
-      end
+      require "lspinstall".setup()
+      require "lspinstall"
     end,
   },
 
@@ -23,11 +20,9 @@ return {
     "nvim-telescope/telescope.nvim",
     config = function()
       require("core.telescope").setup()
-      if lvim.builtin.telescope.on_config_done then
-        lvim.builtin.telescope.on_config_done(require "telescope")
-      end
+      require "telescope"
+      
     end,
-    disable = not lvim.builtin.telescope.active,
   },
 
   -- Completion & Snippets
@@ -36,11 +31,8 @@ return {
     event = "InsertEnter",
     config = function()
       require("core.compe").setup()
-      if lvim.builtin.compe.on_config_done then
-        lvim.builtin.compe.on_config_done(require "compe")
-      end
+      require "compe"
     end,
-    disable = not lvim.builtin.compe.active,
     -- wants = "vim-vsnip",
     -- requires = {
     -- {
@@ -58,12 +50,10 @@ return {
     "hrsh7th/vim-vsnip",
     -- wants = "friendly-snippets",
     event = "InsertEnter",
-    disable = not lvim.builtin.compe.active,
   },
   {
     "rafamadriz/friendly-snippets",
     event = "InsertCharPre",
-    disable = not lvim.builtin.compe.active,
   },
 
   -- Autopairs
@@ -73,23 +63,18 @@ return {
     after = "nvim-compe",
     config = function()
       require("core.autopairs").setup()
-      if lvim.builtin.autopairs.on_config_done then
-        lvim.builtin.autopairs.on_config_done(require "nvim-autopairs")
-      end
+      require "nvim-autopairs"
     end,
-    disable = not lvim.builtin.autopairs.active or not lvim.builtin.compe.active,
   },
 
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "0.5-compat",
-    -- run = ":TSUpdate",
+    run = ":TSUpdate",
     config = function()
       require("core.treesitter").setup()
-      if lvim.builtin.treesitter.on_config_done then
-        lvim.builtin.treesitter.on_config_done(require "nvim-treesitter.configs")
-      end
+      require "nvim-treesitter.configs"
     end,
   },
 
@@ -101,11 +86,8 @@ return {
     -- commit = "fd7f60e242205ea9efc9649101c81a07d5f458bb",
     config = function()
       require("core.nvimtree").setup()
-      if lvim.builtin.nvimtree.on_config_done then
-        lvim.builtin.nvimtree.on_config_done(require "nvim-tree.config")
-      end
+      require "nvim-tree.config"
     end,
-    disable = not lvim.builtin.nvimtree.active,
   },
 
   {
@@ -113,12 +95,9 @@ return {
 
     config = function()
       require("core.gitsigns").setup()
-      if lvim.builtin.gitsigns.on_config_done then
-        lvim.builtin.gitsigns.on_config_done(require "gitsigns")
-      end
+      require "gitsigns"
     end,
     event = "BufRead",
-    disable = not lvim.builtin.gitsigns.active,
   },
 
   -- Whichkey
@@ -126,12 +105,9 @@ return {
     "folke/which-key.nvim",
     config = function()
       require("core.which-key").setup()
-      if lvim.builtin.which_key.on_config_done then
-        lvim.builtin.which_key.on_config_done(require "which-key")
-      end
+      require "which-key"
     end,
     event = "BufWinEnter",
-    disable = not lvim.builtin.which_key.active,
   },
 
   -- Comments
@@ -140,11 +116,8 @@ return {
     event = "BufRead",
     config = function()
       require("nvim_comment").setup()
-      if lvim.builtin.comment.on_config_done then
-        lvim.builtin.comment.on_config_done(require "nvim_comment")
-      end
+      require "nvim_comment"
     end,
-    disable = not lvim.builtin.comment.active,
   },
 
   -- project.nvim
@@ -152,11 +125,8 @@ return {
     "ahmedkhalf/project.nvim",
     config = function()
       require("core.project").setup()
-      if lvim.builtin.project.on_config_done then
-        lvim.builtin.project.on_config_done()
-      end
+      
     end,
-    disable = not lvim.builtin.project.active,
   },
 
   -- Icons
@@ -167,24 +137,17 @@ return {
     "glepnir/galaxyline.nvim",
     config = function()
       require "core.galaxyline"
-      if lvim.builtin.galaxyline.on_config_done then
-        lvim.builtin.galaxyline.on_config_done(require "galaxyline")
-      end
+      require "galaxyline"
     end,
     event = "BufWinEnter",
-    disable = not lvim.builtin.galaxyline.active,
   },
 
   {
     "romgrk/barbar.nvim",
     config = function()
       require("core.bufferline").setup()
-      if lvim.builtin.bufferline.on_config_done then
-        lvim.builtin.bufferline.on_config_done()
-      end
     end,
     event = "BufWinEnter",
-    disable = not lvim.builtin.bufferline.active,
   },
 
   -- Debugging
@@ -193,11 +156,8 @@ return {
     -- event = "BufWinEnter",
     config = function()
       require("core.dap").setup()
-      if lvim.builtin.dap.on_config_done then
-        lvim.builtin.dap.on_config_done(require "dap")
-      end
+      require "dap"
     end,
-    disable = not lvim.builtin.dap.active,
   },
 
   -- Debugger management
@@ -205,32 +165,133 @@ return {
     "Pocco81/DAPInstall.nvim",
     -- event = "BufWinEnter",
     -- event = "BufRead",
-    disable = not lvim.builtin.dap.active,
   },
 
-  -- Dashboard
-  {
-    "ChristianChiarulli/dashboard-nvim",
-    event = "BufWinEnter",
-    config = function()
-      require("core.dashboard").setup()
-      if lvim.builtin.dashboard.on_config_done then
-        lvim.builtin.dashboard.on_config_done(require "dashboard")
-      end
-    end,
-    disable = not lvim.builtin.dashboard.active,
-  },
 
   -- Terminal
+  -- {
+  --   "akinsho/nvim-toggleterm.lua",
+  --   event = "BufWinEnter",
+  --   config = function()
+  --     require("core.terminal").setup()
+  --     if lvim.builtin.terminal.on_config_done then
+  --       lvim.builtin.terminal.on_config_done(require "toggleterm")
+  --     end
+  --   end,
+  -- },
   {
-    "akinsho/nvim-toggleterm.lua",
-    event = "BufWinEnter",
+    "voldikss/vim-floaterm",
+    -- config = function()
+    --   require("my-floatterm")
+    -- end,
+  },
+  {"bamzi/bamzi-theme"},
+  {"nvim-telescope/telescope-fzy-native.nvim"},
+  {"nvim-telescope/telescope-project.nvim"},
+  {"nvim-lua/completion-nvim"},
+  {"tpope/vim-surround"},
+  {"terryma/vim-multiple-cursors"},
+  {"mhinz/vim-startify"},
+  {"https://github.com/ap/vim-css-color"},
+  {"gruvbox-community/gruvbox"},
+  {
+    "ray-x/lsp_signature.nvim",
     config = function()
-      require("core.terminal").setup()
-      if lvim.builtin.terminal.on_config_done then
-        lvim.builtin.terminal.on_config_done(require "toggleterm")
-      end
+      require("lsp_signature").on_attach()
     end,
-    disable = not lvim.builtin.terminal.active,
+    event = "InsertEnter",
+  },
+  {
+    "unblevable/quick-scope",
+    config = function()
+      vim.cmd [[
+      let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+      ]]
+    end,
+  },
+
+  {
+    "ruifm/gitlinker.nvim",
+    event = "BufRead",
+    config = function()
+      require("gitlinker").setup {
+        opts = {
+          -- remote = 'github', -- force the use of a specific remote
+          -- adds current line nr in the url for normal mode
+          add_current_line_on_normal_mode = true,
+          -- callback for what to do with the url
+          action_callback = require("gitlinker.actions").open_in_browser,
+          -- print the url after performing the action
+          print_url = false,
+          -- mapping to call url generation
+          mappings = "<leader>gy",
+        },
+      }
+    end,
+    requires = "nvim-lua/plenary.nvim",
+  },
+  {
+    "phaazon/hop.nvim",
+    event = "BufRead",
+    config = function()
+      require("hop").setup()
+    end,
+  },
+  {
+    "mattn/vim-gist",
+    event = "BufRead",
+    requires = "mattn/webapi-vim",
+  },
+  {
+    "andymass/vim-matchup",
+    event = "CursorMoved",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
+  },
+  {
+    "nacro90/numb.nvim",
+    event = "BufRead",
+    config = function()
+      require("numb").setup {
+        show_numbers = true, -- Enable 'number' for the window while peeking
+        show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+      }
+    end,
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    event = "BufRead",
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    ft = "markdown",
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "*" }, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/playground",
+    event = "BufRead",
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+  },
+  {
+    "sindrets/diffview.nvim",
+    event = "BufRead",
   },
 }

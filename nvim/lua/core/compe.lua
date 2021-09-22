@@ -1,6 +1,7 @@
 local M = {}
+local compe_config = {}
 M.config = function()
-  lvim.builtin.compe = {
+  compe_config = {
     active = true,
     autocomplete = true,
     debug = false,
@@ -62,7 +63,7 @@ M.setup = function()
 
   local compe = require "compe"
 
-  compe.setup(lvim.builtin.compe)
+  compe.setup(compe_config)
 
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -116,7 +117,7 @@ M.setup = function()
   end
 
   local keymap = require "keymappings"
-  keymap.load(lvim.builtin.compe.keymap.values, lvim.builtin.compe.keymap.opts)
+  keymap.load(compe_config.keymap.values, compe_config.keymap.opts)
 
   vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
   vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })

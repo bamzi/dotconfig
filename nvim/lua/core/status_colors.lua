@@ -1,4 +1,4 @@
-lvim.builtin.galaxyline = {
+galaxyline_config = {
   active = true,
   show_mode = false,
   colors = {

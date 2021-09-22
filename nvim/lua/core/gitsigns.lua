@@ -1,6 +1,7 @@
 local M = {}
+local gitsigns_config = {}
 M.config = function()
-  lvim.builtin.gitsigns = {
+  gitsigns_config = {
     active = true,
     opts = {
       signs = {
@@ -51,7 +52,7 @@ M.config = function()
 end
 
 M.setup = function()
-  require("gitsigns").setup(lvim.builtin.gitsigns.opts)
+  require("gitsigns").setup(gitsigns_config.opts)
 end
 
 return M

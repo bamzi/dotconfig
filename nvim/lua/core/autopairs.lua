@@ -1,7 +1,7 @@
 local M = {}
-
+local autopairs_config = {}
 function M.config()
-  lvim.builtin.autopairs = {
+  autopairs_config = {
     active = true,
     ---@usage  map <CR> on insert mode
     map_cr = true,
@@ -39,14 +39,14 @@ M.setup = function()
 
   if package.loaded["compe"] then
     require("nvim-autopairs.completion.compe").setup {
-      map_cr = lvim.builtin.autopairs.map_cr,
-      map_complete = lvim.builtin.autopairs.map_complete,
+      map_cr = autopairs_config.map_cr,
+      map_complete = autopairs_config.map_complete,
     }
   end
 
   npairs.setup {
-    check_ts = lvim.builtin.autopairs.check_ts,
-    ts_config = lvim.builtin.autopairs.ts_config,
+    check_ts = autopairs_config.check_ts,
+    ts_config = autopairs_config.ts_config,
   }
 
   require("nvim-treesitter.configs").setup { autopairs = { enable = true } }

@@ -2,7 +2,7 @@ local M = {}
 local utils = require "utils"
 
 M.config = function()
-  lvim.builtin["terminal"] = {
+  terms = {
     -- size can be a number or function which is passed the current terminal
     size = 20,
     -- open_mapping = [[<c-\>]],
@@ -36,8 +36,8 @@ M.config = function()
     },
     -- Add executables on the config.lua
     -- { exec, keymap, name}
-    -- lvim.builtin.terminal.execs = {{}} to overwrite
-    -- lvim.builtin.terminal.execs[#lvim.builtin.terminal.execs+1] = {"gdb", "tg", "GNU Debugger"}
+    -- terms.execs = {{}} to overwrite
+    -- terms.execs[#terms.execs+1] = {"gdb", "tg", "GNU Debugger"}
     execs = {
       { "lazygit", "gg", "LazyGit" },
     },
@@ -46,10 +46,10 @@ end
 
 M.setup = function()
   local terminal = require "toggleterm"
-  for _, exec in pairs(lvim.builtin.terminal.execs) do
+  for _, exec in pairs(terms.execs) do
     require("core.terminal").add_exec(exec[1], exec[2], exec[3])
   end
-  terminal.setup(lvim.builtin.terminal)
+  terminal.setup(terms)
 end
 
 M.add_exec = function(exec, keymap, name)
@@ -106,7 +106,7 @@ M.toggle_log_view = function(name)
   if not logfile then
     return
   end
-  local term_opts = vim.tbl_deep_extend("force", lvim.builtin.terminal, {
+  local term_opts = vim.tbl_deep_extend("force", terms, {
     cmd = lvim.log.viewer.cmd .. " " .. logfile,
     open_mapping = lvim.log.viewer.layout_config.open_mapping,
     direction = lvim.log.viewer.layout_config.direction,

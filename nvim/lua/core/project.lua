@@ -1,7 +1,8 @@
 local M = {}
 --
+local proj_config = {}
 function M.config()
-  lvim.builtin.project = {
+  proj_config = {
     --- This is on by default since it's currently the expected behavior.
     ---@usage set to false to disable project.nvim.
     active = true,
@@ -27,7 +28,7 @@ function M.config()
 end
 --
 function M.setup()
-  local settings = lvim.builtin.project
+  local settings = proj_config
 
   -- Table of lsp clients to ignore by name
   -- eg: { "efm", ... }
@@ -39,10 +40,6 @@ function M.setup()
 
   require("project_nvim").setup(settings)
 
-  lvim.builtin.dashboard.custom_section["b"] = {
-    description = { "  Recent Projects    " },
-    command = "Telescope projects",
-  }
 end
 --
 return M

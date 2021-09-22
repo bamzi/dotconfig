@@ -1,6 +1,4 @@
-local autocommands = {}
-
-lvim.autocommands = {
+local autocommands =  {
   _general_settings = {
     {
       "Filetype",

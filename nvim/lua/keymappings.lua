@@ -1,6 +1,5 @@
 local M = {}
 local Log = require "core.log"
-
 local generic_opts_any = { noremap = true, silent = true }
 
 local generic_opts = {
@@ -26,7 +25,7 @@ local mode_adapters = {
 function M.append_to_defaults(keymaps)
   for mode, mappings in pairs(keymaps) do
     for k, v in ipairs(mappings) do
-      lvim.keys[mode][k] = v
+      mykeys[mode][k] = v
     end
   end
 end
@@ -63,7 +62,7 @@ function M.load(keymaps)
 end
 
 function M.config()
-  lvim.keys = {
+  mykeys = {
     ---@usage change or add keymappings for insert mode
     insert_mode = {
       -- 'jk' for quitting insert mode
@@ -155,10 +154,10 @@ function M.config()
   }
 
   if vim.fn.has "mac" == 1 then
-    lvim.keys.normal_mode["<A-Up>"] = lvim.keys.normal_mode["<C-Up>"]
-    lvim.keys.normal_mode["<A-Down>"] = lvim.keys.normal_mode["<C-Down>"]
-    lvim.keys.normal_mode["<A-Left>"] = lvim.keys.normal_mode["<C-Left>"]
-    lvim.keys.normal_mode["<A-Right>"] = lvim.keys.normal_mode["<C-Right>"]
+    mykeys.normal_mode["<A-Up>"] = mykeys.normal_mode["<C-Up>"]
+    mykeys.normal_mode["<A-Down>"] = mykeys.normal_mode["<C-Down>"]
+    mykeys.normal_mode["<A-Left>"] = mykeys.normal_mode["<C-Left>"]
+    mykeys.normal_mode["<A-Right>"] = mykeys.normal_mode["<C-Right>"]
     if Log:get_default() then
       Log:get_default().info "Activated mac keymappings"
     end
@@ -168,15 +167,15 @@ end
 function M.print(mode)
   print "List of LunarVim's default keymappings (not including which-key)"
   if mode then
-    print(vim.inspect(lvim.keys[mode]))
+    print(vim.inspect(mykeys[mode]))
   else
-    print(vim.inspect(lvim.keys))
+    print(vim.inspect(mykeys))
   end
 end
 
 function M.setup()
-  vim.g.mapleader = (lvim.leader == "space" and " ") or lvim.leader
-  M.load(lvim.keys)
+  vim.g.mapleader = (" ")
+  M.load(mykeys)
 end
 
 return M

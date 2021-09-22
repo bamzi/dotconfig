@@ -1,6 +1,8 @@
 -- if not package.loaded['galaxyline'] then
 --   return
 -- end
+require "core.status_colors"  
+
 local Log = require "core.log"
 local status_ok, gl = pcall(require, "galaxyline")
 if not status_ok then
@@ -9,9 +11,9 @@ if not status_ok then
 end
 
 -- NOTE: if someone defines colors but doesn't have them then this will break
-local palette_status_ok, colors = pcall(require, lvim.colorscheme .. ".palette")
+local palette_status_ok, colors = pcall(require, color_theme .. ".palette")
 if not palette_status_ok then
-  colors = lvim.builtin.galaxyline.colors
+  colors = galaxyline_config.colors
 end
 
 local condition = require "galaxyline.condition"
@@ -58,7 +60,7 @@ table.insert(gls.left, {
         ["!"] = colors.blue,
         t = colors.blue,
       }
-      if lvim.builtin.galaxyline.show_mode then
+      if galaxyline_config.show_mode then
         local name = get_mode_name()
         -- Fall back to the default behavior is a name is not defined
         if name ~= nil then

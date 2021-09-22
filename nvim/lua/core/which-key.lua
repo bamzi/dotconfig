@@ -1,6 +1,7 @@
 local M = {}
+ 
 M.config = function()
-  lvim.builtin.which_key = {
+  whichkeys = {
     ---@usage disable which-key completely [not recommeded]
     active = true,
     setup = {
@@ -91,6 +92,23 @@ M.config = function()
           "<cmd>BufferOrderByLanguage<cr>",
           "sort BufferLines automatically by language",
         },
+      },
+      -- dap
+      d = {
+        name = "Debug",
+        t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+        b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
+        c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+        C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
+        d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
+        g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
+        i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+        o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+        u = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
+        p = { "<cmd>lua require'dap'.pause.toggle()<cr>", "Pause" },
+        r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
+        s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
+        q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
       },
       p = {
         name = "Packer",
@@ -249,13 +267,13 @@ end
 M.setup = function()
   local which_key = require "which-key"
 
-  which_key.setup(lvim.builtin.which_key.setup)
+  which_key.setup(whichkeys.setup)
 
-  local opts = lvim.builtin.which_key.opts
-  local vopts = lvim.builtin.which_key.vopts
+  local opts = whichkeys.opts
+  local vopts = whichkeys.vopts
 
-  local mappings = lvim.builtin.which_key.mappings
-  local vmappings = lvim.builtin.which_key.vmappings
+  local mappings = whichkeys.mappings
+  local vmappings = whichkeys.vmappings
 
   which_key.register(mappings, opts)
   which_key.register(vmappings, vopts)

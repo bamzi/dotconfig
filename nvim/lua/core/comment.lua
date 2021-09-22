@@ -1,7 +1,7 @@
 local M = {}
-
+local comm_config = {}
 function M.config()
-  lvim.builtin.comment = {
+  comm_config = {
     active = true,
     -- Linters prefer comment and line to have a space in between markers
     marker_padding = true,
@@ -19,7 +19,7 @@ function M.config()
 end
 
 function M.setup()
-  require("nvim_comment").setup(lvim.builtin.comment)
+  require("nvim_comment").setup(comm_config)
 end
 
 return M
