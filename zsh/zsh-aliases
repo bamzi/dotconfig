@@ -79,3 +79,6 @@ alias gpo='git push -u origin'
 
 alias gocode="$GOPATH"
 alias raly="$HOME/dev/raly"
+
+# Tidy-viewer for csv files: github.com/alexhallam/tv
+alias tv='tidy-viewer'
