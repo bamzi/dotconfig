@@ -2,20 +2,26 @@ return {
   -- Packer can manage itself as an optional plugin
   { "wbthomason/packer.nvim" },
   { "neovim/nvim-lspconfig" },
-  {
-    "junegunn/fzf",
-    config = function()
-      vim.cmd [[
-        fzf#install()
-      ]]
-    end,
-},
+	{ 'ibhagwan/fzf-lua',
+  	requires = {
+    	'vijaymarupudi/nvim-fzf',
+    	'kyazdani42/nvim-web-devicons' } -- optional for icons
+	},
+  -- {
+    -- "junegunn/fzf",
+		-- run = './install --bin',
+    -- config = function()
+    --   vim.cmd [[
+    --     fzf#install()
+    --   ]]
+    -- end,
+-- },
   {"junegunn/fzf.vim"},
   { "tamago324/nlsp-settings.nvim" },
   { "jose-elias-alvarez/null-ls.nvim" },
   {
     "kabouzeid/nvim-lspinstall",
-    event = "VimEnter",
+    -- event = "VimEnter",
     config = function()
       require "lspinstall".setup()
       require "lspinstall"
@@ -90,12 +96,9 @@ return {
   -- NvimTree
   {
     "kyazdani42/nvim-tree.lua",
-    -- event = "BufWinOpen",
-    -- cmd = "NvimTreeToggle",
-    -- commit = "fd7f60e242205ea9efc9649101c81a07d5f458bb",
     config = function()
       require("core.nvimtree").setup()
-      require "nvim-tree.config"
+      -- require "nvim-tree.config"
     end,
   },
 
@@ -208,7 +211,7 @@ return {
     config = function()
       require("lsp_signature").on_attach()
     end,
-    event = "InsertEnter",
+    -- event = "InsertEnter",
   },
   {
     "unblevable/quick-scope",
@@ -297,7 +300,7 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
   },
   {
     "sindrets/diffview.nvim",

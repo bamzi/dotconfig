@@ -67,8 +67,10 @@ M.config = function()
       ["q"] = { "<cmd>q!<CR>", "Quit" },
       ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
       ["c"] = { "<cmd>BufferClose!<CR>", "Close Buffer" },
-      ["e"] = { "<cmd>lua require'core.nvimtree'.toggle_tree()<CR>", "Explorer" },
+      -- ["e"] = { "<cmd>lua require'core.nvimtree'.toggle_tree()<CR>", "Explorer" },
+      ["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
       -- ["f"] = { "<cmd>Telescope find_files<CR>", "Find File" },
+      ["b"] = { "<cmd>lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>", "FZF" },
       ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
       b = {
         name = "Buffers",
