@@ -2,10 +2,10 @@ local M = {}
 
 local function find_root_dir()
   local util = require "lspconfig/util"
-  local lsp_utils = require "lsp.utils"
+  local lsp_utils = require "lvim.lsp.utils"
 
-  local status_ok, ts_client = lsp_utils.is_client_active "typescript"
-  if status_ok then
+  local ts_client = lsp_utils.is_client_active "typescript"
+  if ts_client then
     return ts_client.config.root_dir
   end
   local dirname = vim.fn.expand "%:p:h"
@@ -28,6 +28,7 @@ local local_providers = {
   prettier_d_slim = { find = from_node_modules },
   eslint_d = { find = from_node_modules },
   eslint = { find = from_node_modules },
+  stylelint = { find = from_node_modules },
 }
 
 function M.find_command(command)
@@ -42,6 +43,19 @@ function M.find_command(command)
     return command
   end
   return nil
+end
+
+function M.list_registered_providers_names(filetype)
+  local s = require "null-ls.sources"
+  local available_sources = s.get_available(filetype)
+  local registered = {}
+  for _, source in ipairs(available_sources) do
+    for method in pairs(source.methods) do
+      registered[method] = registered[method] or {}
+      table.insert(registered[method], source.name)
+    end
+  end
+  return registered
 end
 
 return M

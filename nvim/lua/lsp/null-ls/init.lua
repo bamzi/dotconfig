@@ -1,44 +1,24 @@
 local M = {}
+local lsp_cfg = require("lsp.config")
 
-function M.list_supported_provider_names(filetype)
-  local names = {}
 
-  local formatters = require "lsp.null-ls.formatters"
-  local linters = require "lsp.null-ls.linters"
+local Log = require "core.log"
 
-  vim.list_extend(names, formatters.list_supported_names(filetype))
-  vim.list_extend(names, linters.list_supported_names(filetype))
-
-  return names
-end
-
-function M.list_unsupported_provider_names(filetype)
-  local names = {}
-
-  local formatters = require "lsp.null-ls.formatters"
-  local linters = require "lsp.null-ls.linters"
-
-  vim.list_extend(names, formatters.list_unsupported_names(filetype))
-  vim.list_extend(names, linters.list_unsupported_names(filetype))
-
-  return names
-end
-
--- TODO: for linters and formatters with spaces and '-' replace with '_'
-function M.setup(filetype, options)
-  options = options or {}
-
-  local ok, _ = pcall(require, "null-ls")
-  if not ok then
-    require("core.log"):get_default().error "Missing null-ls dependency"
+function M:setup()
+  local status_ok, null_ls = pcall(require, "null-ls")
+  if not status_ok then
+    Log:error "Missing null-ls dependency"
     return
   end
 
-  local formatters = require "lsp.null-ls.formatters"
-  local linters = require "lsp.null-ls.linters"
+  null_ls.config(lsp_cfg.null_ls.config)
+  local default_opts = require("lsp").get_common_opts()
 
-  formatters.setup(filetype, options)
-  linters.setup(filetype, options)
+  if vim.tbl_isempty(lsp_cfg.null_ls.setup or {}) then
+    lsp_cfg.null_ls.setup = default_opts
+  end
+
+  require("lspconfig")["null-ls"].setup(lsp_cfg.null_ls.setup)
 end
 
 return M

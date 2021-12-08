@@ -22,7 +22,7 @@ end
 
 require("lspconfig").efm.setup {
   -- init_options = {initializationOptions},
-  cmd = { DATA_PATH .. "/lspinstall/efm/efm-langserver" },
+  cmd = { DATA_PATH .. "/lsp_servers/efm/efm-langserver" },
   init_options = { documentFormatting = true, codeAction = false },
   filetypes = { "python" },
   settings = {
@@ -36,7 +36,7 @@ require("lspconfig").efm.setup {
 -- npm i -g pyright
 require("lspconfig").pyright.setup {
   cmd = {
-    DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
+    DATA_PATH .. "/lsp_servers/python/node_modules/.bin/pyright-langserver",
     "--stdio",
   },
   on_attach = require("lsp").common_on_attach,

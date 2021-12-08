@@ -9,7 +9,7 @@
 -- end
 require("lspconfig").tsserver.setup {
   cmd = {
-    DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
+    DATA_PATH .. "/lsp_servers/typescript/node_modules/.bin/typescript-language-server",
     "--stdio",
   },
   filetypes = {

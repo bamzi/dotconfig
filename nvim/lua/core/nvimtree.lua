@@ -1,25 +1,63 @@
 local M = {}
 local Log = require "core.log"
-local tree_config = {}
-function M.config()
-  tree_config = {
+local tree_config = {
     active = true,
     on_config_done = nil,
     setup = {
-      auto_open = 0,
-      auto_close = 1,
-      tab_open = 0,
-      update_focused_file = {
-        enable = 1,
+      disable_netrw = true,
+      hijack_netrw = true,
+      open_on_setup = false,
+      ignore_ft_on_setup = {
+        "startify",
+        "dashboard",
+        "alpha",
       },
-      lsp_diagnostics = 1,
+      update_to_buf_dir = {
+        enable = true,
+        auto_open = true,
+      },
+      auto_close = true,
+      open_on_tab = false,
+      hijack_cursor = false,
+      update_cwd = false,
+      diagnostics = {
+        enable = true,
+        icons = {
+          hint = "",
+          info = "",
+          warning = "",
+          error = "",
+        },
+      },
+      update_focused_file = {
+        enable = true,
+        update_cwd = true,
+        ignore_list = {},
+      },
+      system_open = {
+        cmd = nil,
+        args = {},
+      },
+      git = {
+        enable = true,
+        ignore = true,
+        timeout = 200,
+      },
       view = {
         width = 30,
+        height = 30,
         side = "left",
-        auto_resize = false,
+        auto_resize = true,
+        number = false,
+        relativenumber = false,
         mappings = {
           custom_only = false,
+          list = {},
         },
+      },
+      filters = {
+        dotfiles = false,
+        custom = { ".git", "node_modules", ".cache" },
       },
     },
     show_icons = {
@@ -29,13 +67,10 @@ function M.config()
       folder_arrows = 1,
       tree_width = 30,
     },
-    ignore = { ".git", "node_modules", ".cache" },
     quit_on_open = 0,
-    hide_dotfiles = 1,
     git_hl = 1,
+    disable_window_picker = 0,
     root_folder_modifier = ":t",
-    allow_resize = 1,
-    auto_ignore_ft = { "startify", "dashboard" },
     icons = {
       default = "",
       symlink = "",
@@ -57,6 +92,9 @@ function M.config()
       },
     },
   }
+
+function M.config()
+  return tree_config    
 end
 
 function M.setup()
@@ -71,12 +109,7 @@ function M.setup()
     g["nvim_tree_" .. opt] = val
   end
 
-  -- Implicitly update nvim-tree when project module is active
-  tree_config.respect_buf_cwd = 1
-  tree_config.setup.update_cwd = 1
-  tree_config.setup.disable_netrw = 0
-  tree_config.setup.hijack_netrw = 0
-  vim.g.netrw_banner = 0
+  vim.g.netrw_banner = false
 
   local tree_cb = nvim_tree_config.nvim_tree_callback
 
@@ -85,6 +118,9 @@ function M.setup()
       { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
       { key = "h", cb = tree_cb "close_node" },
       { key = "v", cb = tree_cb "vsplit" },
+      { key = "C", cb = tree_cb "cd" },
+      { key = "gtf", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('find_files')<cr>" },
+      { key = "gtg", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('live_grep')<cr>" },
     }
   end
 

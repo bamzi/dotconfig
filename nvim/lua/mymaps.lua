@@ -3,7 +3,6 @@ local M = {}
 local map = vim.api.nvim_set_keymap
 local options = { noremap = true }
 
-
 M.start = function()
   map('n', '<leader>mb', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 btm<CR>', options) -- Bottom app (brew install clementtsang/bottom/bottom)
   map('n', '<leader>md', '<CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazydocker<CR>', options)
@@ -96,6 +95,8 @@ M.start = function()
   vim.api.nvim_set_keymap("i", "<C-k>", "<esc>:m .-2<CR>==", {noremap = true})
   vim.api.nvim_set_keymap("n", "<leader>j", ":m .+1<CR>==", {noremap = true})
   vim.api.nvim_set_keymap("n", "<leader>k", ":m .-2<CR>==", {noremap = true})
+
+
 
 
 

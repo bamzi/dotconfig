@@ -59,7 +59,7 @@ M.config = function()
 end
 
 M.setup = function()
-  vim.g.vsnip_snippet_dir = lvim.vsnip_dir
+  vim.g.vsnip_snippet_dir = CONFIG_PATH .. "/snippets"
 
   local compe = require "compe"
 

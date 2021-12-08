@@ -20,12 +20,13 @@ return {
   { "tamago324/nlsp-settings.nvim" },
   { "jose-elias-alvarez/null-ls.nvim" },
   {
-    "kabouzeid/nvim-lspinstall",
+	"williamboman/nvim-lsp-installer",
+    -- "kabouzeid/nvim-lspinstall",
     -- event = "VimEnter",
-    config = function()
-      require "lspinstall".setup()
-      require "lspinstall"
-    end,
+    -- config = function()
+      -- require "lspinstall".setup()
+      -- require "lspinstall"
+    -- end,
   },
 
   { "nvim-lua/popup.nvim" },
@@ -41,26 +42,26 @@ return {
   },
 
   -- Completion & Snippets
-  {
-    "hrsh7th/nvim-compe",
-    event = "InsertEnter",
-    config = function()
-      require("core.compe").setup()
-      require "compe"
-    end,
-    -- wants = "vim-vsnip",
-    -- requires = {
-    -- {
-    --   "hrsh7th/vim-vsnip",
-    --   wants = "friendly-snippets",
-    --   event = "InsertCharPre",
-    -- },
-    -- {
-    --   "rafamadriz/friendly-snippets",
-    --   event = "InsertCharPre",
-    -- },
-    -- },
-  },
+  -- {
+  --   "hrsh7th/nvim-compe",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("core.compe").setup()
+  --     require "compe"
+  --   end,
+  --   -- wants = "vim-vsnip",
+  --   -- requires = {
+  --   -- {
+  --   --   "hrsh7th/vim-vsnip",
+  --   --   wants = "friendly-snippets",
+  --   --   event = "InsertCharPre",
+  --   -- },
+  --   -- {
+  --   --   "rafamadriz/friendly-snippets",
+  --   --   event = "InsertCharPre",
+  --   -- },
+  --   -- },
+  -- },
   {
     "hrsh7th/vim-vsnip",
     -- wants = "friendly-snippets",
@@ -75,7 +76,7 @@ return {
   {
     "windwp/nvim-autopairs",
     -- event = "InsertEnter",
-    after = "nvim-compe",
+    -- after = "nvim-compe",
     config = function()
       require("core.autopairs").setup()
       require "nvim-autopairs"
@@ -122,15 +123,22 @@ return {
     event = "BufWinEnter",
   },
 
-  -- Comments
+  --- Comments
   {
-    "terrortylor/nvim-comment",
+    "numToStr/Comment.nvim",
     event = "BufRead",
     config = function()
-      require("nvim_comment").setup()
-      require "nvim_comment"
+      require("core.comment").setup()
     end,
   },
+  -- {
+  --   "terrortylor/nvim-comment",
+  --   event = "BufRead",
+  --   config = function()
+  --     require("nvim_comment").setup()
+  --     require "nvim_comment"
+  --   end,
+  -- },
 
   -- project.nvim
   {
@@ -145,13 +153,22 @@ return {
   { "kyazdani42/nvim-web-devicons" },
 
   -- Status Line and Bufferline
+  -- {
+  --   "glepnir/galaxyline.nvim",
+  --   config = function()
+  --     require "core.galaxyline"
+  --     require "galaxyline"
+  --   end,
+  --   event = "BufWinEnter",
+  -- },
+  -- Status Line and Bufferline
   {
-    "glepnir/galaxyline.nvim",
+    -- "hoob3rt/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     config = function()
-      require "core.galaxyline"
-      require "galaxyline"
+      require("core.lualine").setup()
     end,
-    event = "BufWinEnter",
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
   },
 
   {
@@ -200,7 +217,7 @@ return {
   {"bamzi/bamzi-theme"},
   {"nvim-telescope/telescope-fzy-native.nvim"},
   {"nvim-telescope/telescope-project.nvim"},
-  {"nvim-lua/completion-nvim"},
+  -- {"nvim-lua/completion-nvim"},
   {"tpope/vim-surround"},
   {"terryma/vim-multiple-cursors"},
   {"mhinz/vim-startify"},
@@ -306,4 +323,43 @@ return {
     "sindrets/diffview.nvim",
     event = "BufRead",
   },
+  
+  {
+    'ray-x/navigator.lua', 
+    requires = {
+      'ray-x/guihua.lua', 
+      run = 'cd lua/fzy && make'
+    }
+  },
+  -- Install nvim-cmp, and buffer source as a dependency
+  {
+    "hrsh7th/nvim-cmp",
+    config = function()
+      require("core.cmp").setup()
+    end,
+    requires = {
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lua",
+    },
+    run = function()
+      -- cmp's config requires cmp to be installed to run the first time
+        require("core.cmp").config()
+    end,
+  },
+
+  {
+    "akinsho/toggleterm.nvim",
+    event = "BufWinEnter",
+    config = function()
+      require("core.terminal").setup()
+    end,
+  },
+  -----
+  {
+	"github/copilot.vim",
+  }, 	
 }

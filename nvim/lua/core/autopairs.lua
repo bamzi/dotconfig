@@ -3,11 +3,20 @@ local autopairs_config = {}
 function M.config()
   autopairs_config = {
     active = true,
+    on_config_done = nil,
     ---@usage  map <CR> on insert mode
     map_cr = true,
     ---@usage auto insert after select function or method item
-    -- NOTE: This should be wrapped into a function so that it is re-evaluated when opening new files
-    map_complete = vim.bo.filetype ~= "tex",
+    map_complete = true,
+    ---@usage automatically select the first item
+    auto_select = true,
+    ---@usage use insert confirm behavior instead of replace
+    insert = false,
+    ---@usage  -- modifies the function or method delimiter by filetypes
+    map_char = {
+      all = "(",
+      tex = "{",
+    },
     ---@usage check treesitter
     check_ts = true,
     ts_config = {
@@ -19,35 +28,52 @@ function M.config()
 end
 
 M.setup = function()
-  -- skip it, if you use another global object
-  _G.MUtils = {}
-  local npairs = require "nvim-autopairs"
+  local autopairs = require "nvim-autopairs"
   local Rule = require "nvim-autopairs.rule"
+  local cond = require "nvim-autopairs.conds"
 
-  vim.g.completion_confirm_key = ""
-  MUtils.completion_confirm = function()
-    if vim.fn.pumvisible() ~= 0 then
-      if vim.fn.complete_info()["selected"] ~= -1 then
-        return vim.fn["compe#confirm"](npairs.esc "<cr>")
-      else
-        return npairs.esc "<cr>"
-      end
-    else
-      return npairs.autopairs_cr()
-    end
-  end
-
-  if package.loaded["compe"] then
-    require("nvim-autopairs.completion.compe").setup {
-      map_cr = autopairs_config.map_cr,
-      map_complete = autopairs_config.map_complete,
-    }
-  end
-
-  npairs.setup {
+  autopairs.setup {
     check_ts = autopairs_config.check_ts,
     ts_config = autopairs_config.ts_config,
   }
+
+  -- vim.g.completion_confirm_key = ""
+
+  autopairs.add_rule(Rule("$$", "$$", "tex"))
+  autopairs.add_rules {
+    Rule("$", "$", { "tex", "latex" }) -- don't add a pair if the next character is %
+      :with_pair(cond.not_after_regex_check "%%") -- don't add a pair if  the previous character is xxx
+      :with_pair(cond.not_before_regex_check("xxx", 3)) -- don't move right when repeat character
+      :with_move(cond.none()) -- don't delete if the next character is xx
+      :with_del(cond.not_after_regex_check "xx") -- disable  add newline when press <cr>
+      :with_cr(cond.none()),
+  }
+  autopairs.add_rules {
+    Rule("$$", "$$", "tex"):with_pair(function(opts)
+      print(vim.inspect(opts))
+      if opts.line == "aa $$" then
+        -- don't add pair on that line
+        return false
+      end
+    end),
+  }
+
+  if package.loaded["cmp"] then
+    -- require("nvim-autopairs.completion.cmp").setup {
+    --   map_cr = autopairs_config.map_cr,
+    --   map_complete = autopairs_config.map_complete,
+    --   auto_select = autopairs_config.auto_select,
+    --   insert = autopairs_config.insert,
+    --   map_char = autopairs_config.map_char,
+    -- }
+    require("cmp").setup {
+      map_cr = false,
+      map_complete = autopairs_config.map_complete,
+      map_char = autopairs_config.map_char,
+    }
+    -- we map CR explicitly in cmp.lua but we still need to setup the autopairs CR keymap
+    vim.api.nvim_set_keymap("i", "<CR>", "v:lua.MPairs.autopairs_cr()", { expr = true, noremap = true })
+  end
 
   require("nvim-treesitter.configs").setup { autopairs = { enable = true } }
 
@@ -55,10 +81,14 @@ M.setup = function()
 
   -- TODO: can these rules be safely added from "config.lua" ?
   -- press % => %% is only inside comment or string
-  npairs.add_rules {
+  autopairs.add_rules {
     Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
     Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
   }
+
+  if autopairs_config.on_config_done then
+    autopairs_config.on_config_done(autopairs)
+  end
 end
 
 return M

@@ -1,4 +1,4 @@
-lspconfigx = {
+return {
   lsp = {
     completion = {
       item_kind = {
@@ -103,7 +103,7 @@ lspconfigx = {
       provider = "clangd",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/cpp/clangd/bin/clangd",
+          DATA_PATH .. "/lsp_servers/cpp/clangd/bin/clangd",
           "--background-index",
           "--header-insertion=never",
           "--cross-file-rename",
@@ -132,7 +132,7 @@ lspconfigx = {
       provider = "clangd",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/cpp/clangd/bin/clangd",
+          DATA_PATH .. "/lsp_servers/cpp/clangd/bin/clangd",
           "--background-index",
           "--header-insertion=never",
           "--cross-file-rename",
@@ -179,7 +179,7 @@ lspconfigx = {
       provider = "omnisharp",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/csharp/omnisharp/run",
+          DATA_PATH .. "/lsp_servers/csharp/omnisharp/run",
           "--languageserver",
           "--hostPID",
           tostring(vim.fn.getpid()),
@@ -202,7 +202,7 @@ lspconfigx = {
       provider = "cmake",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/cmake/venv/bin/cmake-language-server",
+          DATA_PATH .. "/lsp_servers/cmake/venv/bin/cmake-language-server",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -217,7 +217,7 @@ lspconfigx = {
       provider = "clojure_lsp",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/clojure/clojure-lsp",
+          DATA_PATH .. "/lsp_servers/clojure/clojure-lsp",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -242,7 +242,7 @@ lspconfigx = {
       setup = {
         cmd = {
           "node",
-          DATA_PATH .. "/lspinstall/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
+          DATA_PATH .. "/lsp_servers/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -268,7 +268,7 @@ lspconfigx = {
       setup = {
         cmd = {
           "node",
-          DATA_PATH .. "/lspinstall/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
+          DATA_PATH .. "/lsp_servers/css/vscode-css/css-language-features/server/dist/node/cssServerMain.js",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -324,7 +324,7 @@ lspconfigx = {
       provider = "dockerls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/dockerfile/node_modules/.bin/docker-langserver",
+          DATA_PATH .. "/lsp_servers/dockerfile/node_modules/.bin/docker-langserver",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -345,7 +345,7 @@ lspconfigx = {
       provider = "elixirls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/elixir/elixir-ls/language_server.sh",
+          DATA_PATH .. "/lsp_servers/elixir/elixir-ls/language_server.sh",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -365,15 +365,15 @@ lspconfigx = {
       provider = "elmls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-language-server",
+          DATA_PATH .. "/lsp_servers/elm/node_modules/.bin/elm-language-server",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
         -- init_options = {
         -- elmAnalyseTrigger = "change",
-        -- elmFormatPath = DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-format",
-        -- elmPath = DATA_PATH .. "/lspinstall/elm/node_modules/.bin/",
-        -- elmTestPath = DATA_PATH .. "/lspinstall/elm/node_modules/.bin/elm-test",
+        -- elmFormatPath = DATA_PATH .. "/lsp_servers/elm/node_modules/.bin/elm-format",
+        -- elmPath = DATA_PATH .. "/lsp_servers/elm/node_modules/.bin/",
+        -- elmTestPath = DATA_PATH .. "/lsp_servers/elm/node_modules/.bin/elm-test",
         -- },
       },
     },
@@ -423,7 +423,7 @@ lspconfigx = {
       provider = "fortls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/fortran/venv/bin/fortls",
+          DATA_PATH .. "/lsp_servers/fortran/venv/bin/fortls",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -451,7 +451,7 @@ lspconfigx = {
       provider = "gopls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/go/gopls",
+          DATA_PATH .. "/lsp_servers/go/gopls",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -483,7 +483,7 @@ lspconfigx = {
     lsp = {
       provider = "hls",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/haskell/hls" },
+        cmd = { DATA_PATH .. "/lsp_servers/haskell/hls" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -507,7 +507,7 @@ lspconfigx = {
       setup = {
         cmd = {
           "node",
-          DATA_PATH .. "/lspinstall/html/vscode-html/html-language-features/server/dist/node/htmlServerMain.js",
+          DATA_PATH .. "/lsp_servers/html/vscode-html/html-language-features/server/dist/node/htmlServerMain.js",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -531,7 +531,7 @@ lspconfigx = {
     lsp = {
       provider = "jdtls",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/java/jdtls.sh" },
+        cmd = { DATA_PATH .. "/lsp_servers/java/jdtls.sh" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -559,7 +559,7 @@ lspconfigx = {
       setup = {
         cmd = {
           "node",
-          DATA_PATH .. "/lspinstall/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",
+          DATA_PATH .. "/lsp_servers/json/vscode-json/json-language-features/server/dist/node/jsonServerMain.js",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -612,7 +612,7 @@ lspconfigx = {
       provider = "kotlin_language_server",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/kotlin/server/bin/kotlin-language-server",
+          DATA_PATH .. "/lsp_servers/kotlin/server/bin/kotlin-language-server",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -651,9 +651,9 @@ lspconfigx = {
       provider = "sumneko_lua",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/lua/sumneko-lua-language-server",
+          DATA_PATH .. "/lsp_servers/lua/sumneko-lua-language-server",
           "-E",
-          DATA_PATH .. "/lspinstall/lua/main.lua",
+          DATA_PATH .. "/lsp_servers/lua/main.lua",
         },
         capabilities = common_capabilities,
         on_attach = common_on_attach,
@@ -738,7 +738,7 @@ lspconfigx = {
       provider = "intelephense",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/php/node_modules/.bin/intelephense",
+          DATA_PATH .. "/lsp_servers/php/node_modules/.bin/intelephense",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -761,7 +761,7 @@ lspconfigx = {
       provider = "puppet",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/puppet/puppet-editor-services/puppet-languageserver",
+          DATA_PATH .. "/lsp_servers/puppet/puppet-editor-services/puppet-languageserver",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -792,7 +792,7 @@ lspconfigx = {
       setup = {
         cmd = {
           -- TODO:
-          DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
+          DATA_PATH .. "/lsp_servers/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -822,7 +822,7 @@ lspconfigx = {
       setup = {
         cmd = {
           -- TODO:
-          DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
+          DATA_PATH .. "/lsp_servers/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -847,7 +847,7 @@ lspconfigx = {
       provider = "pyright",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
+          DATA_PATH .. "/lsp_servers/python/node_modules/.bin/pyright-langserver",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -893,7 +893,7 @@ lspconfigx = {
       provider = "solargraph",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/ruby/solargraph/solargraph",
+          DATA_PATH .. "/lsp_servers/ruby/solargraph/solargraph",
           "stdio",
         },
         on_attach = common_on_attach,
@@ -927,7 +927,7 @@ lspconfigx = {
       provider = "rust_analyzer",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/rust/rust-analyzer",
+          DATA_PATH .. "/lsp_servers/rust/rust-analyzer",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -964,7 +964,7 @@ lspconfigx = {
       provider = "bashls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/bash/node_modules/.bin/bash-language-server",
+          DATA_PATH .. "/lsp_servers/bash/node_modules/.bin/bash-language-server",
           "start",
         },
         on_attach = common_on_attach,
@@ -980,7 +980,7 @@ lspconfigx = {
       provider = "svelte",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/svelte/node_modules/.bin/svelteserver",
+          DATA_PATH .. "/lsp_servers/svelte/node_modules/.bin/svelteserver",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -1034,7 +1034,7 @@ lspconfigx = {
       provider = "terraformls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/terraform/terraform-ls",
+          DATA_PATH .. "/lsp_servers/terraform/terraform-ls",
           "serve",
         },
         on_attach = common_on_attach,
@@ -1049,7 +1049,7 @@ lspconfigx = {
     lsp = {
       provider = "texlab",
       setup = {
-        cmd = { DATA_PATH .. "/lspinstall/latex/texlab" },
+        cmd = { DATA_PATH .. "/lsp_servers/latex/texlab" },
         on_attach = common_on_attach,
         on_init = common_on_init,
         capabilities = common_capabilities,
@@ -1058,6 +1058,7 @@ lspconfigx = {
   },
   typescript = {
     formatters = {
+      "deno", "eslint", "eslint_d", "prettier", "prettier_d_slim", "prettierd", "rustywind",
       -- {
       --   exe = "prettier",
       --   args = {},
@@ -1077,7 +1078,7 @@ lspconfigx = {
       setup = {
         cmd = {
           -- TODO:
-          DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
+          DATA_PATH .. "/lsp_servers/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -1086,7 +1087,7 @@ lspconfigx = {
       },
     },
   },
-  typescriptreact = {
+  tsserver = {
     formatters = {
       -- {
       --   exe = "prettier",
@@ -1108,7 +1109,7 @@ lspconfigx = {
       setup = {
         cmd = {
           -- TODO:
-          DATA_PATH .. "/lspinstall/typescript/node_modules/.bin/typescript-language-server",
+          DATA_PATH .. "/lsp_servers/typescript/node_modules/.bin/typescript-language-server",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -1124,7 +1125,7 @@ lspconfigx = {
       provider = "vimls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/vim/node_modules/.bin/vim-language-server",
+          DATA_PATH .. "/lsp_servers/vim/node_modules/.bin/vim-language-server",
           "--stdio",
         },
         on_attach = common_on_attach,
@@ -1153,7 +1154,7 @@ lspconfigx = {
       provider = "vuels",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/vue/node_modules/.bin/vls",
+          DATA_PATH .. "/lsp_servers/vue/node_modules/.bin/vls",
         },
         on_attach = common_on_attach,
         on_init = common_on_init,
@@ -1177,7 +1178,7 @@ lspconfigx = {
       provider = "yamlls",
       setup = {
         cmd = {
-          DATA_PATH .. "/lspinstall/yaml/node_modules/.bin/yaml-language-server",
+          DATA_PATH .. "/lsp_servers/yaml/node_modules/.bin/yaml-language-server",
           "--stdio",
         },
         on_attach = common_on_attach,

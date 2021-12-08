@@ -1,40 +1,36 @@
 local M = {}
-local linters_by_ft = {}
 
 local null_ls = require "null-ls"
-local services = require "lsp.null-ls.services"
-local logger = require("core.log"):get_default()
+local services = require "lvim.lsp.null-ls.services"
+local Log = require "lvim.core.log"
 
-local function list_names(linters, options)
-  options = options or {}
-  local filter = options.filter or "supported"
-
-  return vim.tbl_keys(linters[filter])
+local is_registered = function(name)
+  local query = {
+    name = name,
+    method = require("null-ls").methods.DIAGNOSTICS,
+  }
+  return require("null-ls.sources").is_registered(query)
 end
 
-function M.list_supported_names(filetype)
-  if not linters_by_ft[filetype] then
-    return {}
-  end
-  return list_names(linters_by_ft[filetype], { filter = "supported" })
-end
-
-function M.list_unsupported_names(filetype)
-  if not linters_by_ft[filetype] then
-    return {}
-  end
-  return list_names(linters_by_ft[filetype], { filter = "unsupported" })
+function M.list_registered_providers(filetype)
+  local null_ls_methods = require "null-ls.methods"
+  local linter_method = null_ls_methods.internal["DIAGNOSTICS"]
+  local registered_providers = services.list_registered_providers_names(filetype)
+  return registered_providers[linter_method] or {}
 end
 
 function M.list_available(filetype)
   local linters = {}
+  local tbl = require "lvim.utils.table"
   for _, provider in pairs(null_ls.builtins.diagnostics) do
-    -- TODO: Add support for wildcard filetypes
-    if vim.tbl_contains(provider.filetypes or {}, filetype) then
+    if tbl.contains(provider.filetypes or {}, function(ft)
+      return ft == "*" or ft == filetype
+    end) then
       table.insert(linters, provider.name)
     end
   end
 
+  table.sort(linters)
   return linters
 end
 
@@ -42,19 +38,29 @@ function M.list_configured(linter_configs)
   local linters, errors = {}, {}
 
   for _, lnt_config in pairs(linter_configs) do
-    local linter = null_ls.builtins.diagnostics[lnt_config.exe]
+    local name = lnt_config.exe:gsub("-", "_")
+    local linter = null_ls.builtins.diagnostics[name]
 
     if not linter then
-      logger.error("Not a valid linter:", lnt_config.exe)
+      Log:error("Not a valid linter: " .. lnt_config.exe)
       errors[lnt_config.exe] = {} -- Add data here when necessary
+    elseif is_registered(lnt_config.exe) then
+      Log:trace "Skipping registering the source more than once"
     else
       local linter_cmd = services.find_command(linter._opts.command)
       if not linter_cmd then
-        logger.warn("Not found:", linter._opts.command)
-        errors[lnt_config.exe] = {} -- Add data here when necessary
+        Log:warn("Not found: " .. linter._opts.command)
+        errors[name] = {} -- Add data here when necessary
       else
-        logger.info("Using linter:", linter_cmd)
-        linters[lnt_config.exe] = linter.with { command = linter_cmd, extra_args = lnt_config.args }
+        Log:debug("Using linter: " .. linter_cmd)
+        table.insert(
+          linters,
+          linter.with {
+            command = linter_cmd,
+            extra_args = lnt_config.args,
+            filetypes = lnt_config.filetypes,
+          }
+        )
       end
     end
   end
@@ -62,13 +68,13 @@ function M.list_configured(linter_configs)
   return { supported = linters, unsupported = errors }
 end
 
-function M.setup(filetype, options)
-  if not lspconfigx.lang[filetype] or (linters_by_ft[filetype] and not options.force_reload) then
+function M.setup(linter_configs)
+  if vim.tbl_isempty(linter_configs) then
     return
   end
 
-  linters_by_ft[filetype] = M.list_configured(lspconfigx.lang[filetype].linters)
-  null_ls.register { sources = linters_by_ft[filetype].supported }
+  local linters = M.list_configured(linter_configs)
+  null_ls.register { sources = linters.supported }
 end
 
 return M

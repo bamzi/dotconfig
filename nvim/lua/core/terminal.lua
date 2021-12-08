@@ -1,6 +1,7 @@
 local M = {}
 local utils = require "utils"
-
+local terms = {}
+local execs = {}
 M.config = function()
   terms = {
     -- size can be a number or function which is passed the current terminal
@@ -46,7 +47,7 @@ end
 
 M.setup = function()
   local terminal = require "toggleterm"
-  for _, exec in pairs(terms.execs) do
+  for _, exec in pairs(execs) do
     require("core.terminal").add_exec(exec[1], exec[2], exec[3])
   end
   terminal.setup(terms)

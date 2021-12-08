@@ -1,27 +1,13 @@
 local M = {}
 local Log = require "core.log"
+local utils = require "utils"
 
-function M.config()
-  vim.lsp.protocol.CompletionItemKind = lspconfigx.lsp.completion.item_kind
-
-  for _, sign in ipairs(lspconfigx.lsp.diagnostics.signs.values) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-  end
-
-  require("lsp.handlers").setup()
-end
-
+local lsp_cfg = require("lsp.config")
 local function lsp_highlight_document(client)
-  if lspconfigx.lsp.document_highlight == false then
-    return -- we don't need further
-  end
-  -- Set autocommands conditional on server_capabilities
+    -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec(
       [[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -33,26 +19,41 @@ local function lsp_highlight_document(client)
   end
 end
 
-local function add_lsp_buffer_keybindings(bufnr)
-  local status_ok, wk = pcall(require, "which-key")
-  if not status_ok then
-    return
+local function lsp_code_lens_refresh(client)
+  if client.resolved_capabilities.code_lens then
+    vim.api.nvim_exec(
+      [[
+      augroup lsp_code_lens_refresh
+        autocmd! * <buffer>
+        autocmd InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+        autocmd InsertLeave <buffer> lua vim.lsp.codelens.display()
+      augroup END
+    ]],
+      false
+    )
   end
+end
 
-  local keys = {
-    ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show hover" },
-    ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
-    ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
-    ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
-    ["gi"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto implementation" },
-    ["gs"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
-    ["gp"] = { "<cmd>lua require'lsp.peek'.Peek('definition')<CR>", "Peek definition" },
-    ["gl"] = {
-      "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false, border = 'single' })<CR>",
-      "Show line diagnostics",
-    },
+local function add_lsp_buffer_keybindings(bufnr)
+  local mappings = {
+    normal_mode = "n",
+    insert_mode = "i",
+    visual_mode = "v",
   }
-  wk.register(keys, { mode = "n", buffer = bufnr })
+
+  local status_ok, wk = pcall(require, "which-key")
+  if status_ok then
+    for mode_name, mode_char in pairs(mappings) do
+      wk.register(lsp_cfg.buffer_mappings[mode_name], { mode = mode_char, buffer = bufnr })
+    end
+  else
+    -- Remap using nvim api
+    for mode_name, mode_char in pairs(mappings) do
+      for key, remap in pairs(lsp_cfg.buffer_mappings[mode_name]) do
+        vim.api.nvim_buf_set_keymap(bufnr, mode_char, key, remap[1], { noremap = true, silent = true })
+      end
+    end
+  end
 end
 
 function M.common_capabilities()
@@ -65,81 +66,102 @@ function M.common_capabilities()
       "additionalTextEdits",
     },
   }
+
+  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  if status_ok then
+    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  end
+
   return capabilities
 end
 
-function M.get_ls_capabilities(client_id)
-  local client
-  if not client_id then
-    local buf_clients = vim.lsp.buf_get_clients()
-    for _, buf_client in ipairs(buf_clients) do
-      if buf_client.name ~= "null-ls" then
-        client_id = buf_client.id
-        break
-      end
+local function select_default_formater(client)
+  if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
+    return
+  end
+  Log:debug("Checking for formatter overriding for " .. client.name)
+  local formatters = require "lsp.null-ls.formatters"
+  local client_filetypes = client.config.filetypes or {}
+  for _, filetype in ipairs(client_filetypes) do
+    if #vim.tbl_keys(formatters.list_registered_providers(filetype)) > 0 then
+      Log:debug("Formatter overriding detected. Disabling formatting capabilities for " .. client.name)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
     end
   end
-  if not client_id then
-    error "Unable to determine client_id"
-  end
-
-  client = vim.lsp.get_client_by_id(tonumber(client_id))
-
-  local enabled_caps = {}
-
-  for k, v in pairs(client.resolved_capabilities) do
-    if v == true then
-      table.insert(enabled_caps, k)
-    end
-  end
-
-  return enabled_caps
 end
 
 function M.common_on_init(client, bufnr)
-  if lspconfigx.lsp.on_init_callback then
-    lspconfigx.lsp.on_init_callback(client, bufnr)
-    Log:get_default().info "Called lsp.on_init_callback"
+  if lsp_cfg.on_init_callback then
+    lsp_cfg.on_init_callback(client, bufnr)
+    Log:debug "Called lsp.on_init_callback"
     return
   end
-
-  local formatters = lspconfigx.lang[vim.bo.filetype].formatters
-  if not vim.tbl_isempty(formatters) and formatters[1]["exe"] ~= nil and formatters[1].exe ~= "" then
-    client.resolved_capabilities.document_formatting = false
-    Log:get_default().info(
-      string.format("Overriding language server [%s] with format provider [%s]", client.name, formatters[1].exe)
-    )
-  end
+  select_default_formater(client)
 end
 
 function M.common_on_attach(client, bufnr)
-  if lspconfigx.lsp.on_attach_callback then
-    lspconfigx.lsp.on_attach_callback(client, bufnr)
-    Log:get_default().info "Called lsp.on_init_callback"
+  if lsp_cfg.on_attach_callback then
+    lsp_cfg.on_attach_callback(client, bufnr)
+    Log:debug "Called lsp.on_attach_callback"
   end
   lsp_highlight_document(client)
+  lsp_code_lens_refresh(client)
   add_lsp_buffer_keybindings(bufnr)
-  require("lsp.null-ls").setup(vim.bo.filetype)
 end
 
-function M.setup(lang)
-  local lsp_utils = require "lsp.utils"
-  local lsp = lspconfigx.lang[lang].lsp
-  if lsp_utils.is_client_active(lsp.provider) then
+local function bootstrap_nlsp(opts)
+  opts = opts or {}
+  local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
+  if lsp_settings_status_ok then
+    lsp_settings.setup(opts)
+  end
+end
+
+function M.get_common_opts()
+  return {
+    on_attach = M.common_on_attach,
+    on_init = M.common_on_init,
+    capabilities = M.common_capabilities(),
+  }
+end
+
+local LSP_DEPRECATED_SIGN_MAP = {
+  ["DiagnosticSignError"] = "LspDiagnosticsSignError",
+  ["DiagnosticSignWarn"] = "LspDiagnosticsSignWarning",
+  ["DiagnosticSignHint"] = "LspDiagnosticsSignHint",
+  ["DiagnosticSignInfo"] = "LspDiagnosticsSignInformation",
+}
+
+function M.setup()
+  Log:debug "Setting up LSP support"
+
+  local lsp_status_ok, _ = pcall(require, "lspconfig")
+  if not lsp_status_ok then
     return
   end
 
-  local overrides = lspconfigx.lsp.override
-  if type(overrides) == "table" then
-    if vim.tbl_contains(overrides, lang) then
-      return
+  local is_neovim_5 = vim.fn.has "nvim-0.6" ~= 1
+
+  for _, sign in ipairs(lsp_cfg.diagnostics.signs.values) do
+    local lsp_sign_name = LSP_DEPRECATED_SIGN_MAP[sign.name]
+    if is_neovim_5 and lsp_sign_name then
+      vim.fn.sign_define(lsp_sign_name, { texthl = lsp_sign_name, text = sign.text, numhl = lsp_sign_name })
     end
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
 
-  if lsp.provider ~= nil and lsp.provider ~= "" then
-    local lspc = require "lspconfig"
-    lspc[lsp.provider].setup(lsp.setup)
+  require("lsp.handlers").setup()
+
+  if not utils.is_directory(lsp_cfg.templates_dir) then
+    require("lsp.templates").generate_templates()
   end
+
+  bootstrap_nlsp { config_home = utils.join_paths(get_config_dir(), "lsp-settings") }
+
+  require("lsp.null-ls").setup()
+
+  require("core.autocmds").configure_format_on_save()
 end
 
 return M
