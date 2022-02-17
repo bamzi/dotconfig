@@ -73,15 +73,15 @@ return packer.startup(function(use)
   use "MattesGroeger/vim-bookmarks"
   use "lunarvim/vim-solidity"
   use "blackCauldron7/surround.nvim"
+  use "tpope/vim-repeat"
   use "Shatur/neovim-session-manager"
   use "rcarriga/nvim-notify"
   use "tversteeg/registers.nvim"
-  use "metakirby5/codi.vim"
+  -- use "metakirby5/codi.vim"
+  use "nyngwang/NeoZoom.lua"
+  use "SmiteshP/nvim-gps"
+  use { "michaelb/sniprun", run = "bash ./install.sh" }
   use {
-    "nyngwang/NeoZoom.lua",
-  }
-  use {
-
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
     ft = "markdown",
@@ -154,7 +154,7 @@ return packer.startup(function(use)
     run = ":TSUpdate",
   }
   use "JoosepAlviste/nvim-ts-context-commentstring"
-  use "ChristianChiarulli/nvim-ts-rainbow"
+  use "p00f/nvim-ts-rainbow"
   use "nvim-treesitter/playground"
   use "windwp/nvim-ts-autotag"
   use "romgrk/nvim-treesitter-context"
@@ -166,6 +166,7 @@ return packer.startup(function(use)
   use "ruifm/gitlinker.nvim"
   use "mattn/vim-gist"
   use "mattn/webapi-vim"
+  use "https://github.com/rhysd/conflict-marker.vim"
 
   -- DAP
   use "mfussenegger/nvim-dap"
@@ -176,6 +177,8 @@ return packer.startup(function(use)
   -- Me
   use "bamzi/bamzi-theme"
   use "mhinz/vim-startify"
+
+  use "RRethy/vim-illuminate"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

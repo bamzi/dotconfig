@@ -15,6 +15,9 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
+local icons = require "user.icons"
+local kind_icons = icons.kind
+
 -- https://github.com/microsoft/vscode/blob/main/src/vs/base/common/codicons.ts
 -- go to the above and then enter <c-v>u<unicode> and the symbold should appear
 -- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
@@ -168,7 +171,8 @@ cmp.setup {
         -- if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
           -- menu = entry.completion_item.data.detail .. " " .. menu
         -- end
-        vim_item.kind = " "
+        -- vim_item.kind = " "
+        vim_item.kind = icons.misc.Robot
       end
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       -- NOTE: order matters
@@ -203,10 +207,10 @@ cmp.setup {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
-  documentation = false,
-  -- documentation = {
-  -- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  -- },
+  documentation = true,
+  documentation = {
+  	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  },
   experimental = {
     ghost_text = true,
     native_menu = false,

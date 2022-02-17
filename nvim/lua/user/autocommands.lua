@@ -5,6 +5,7 @@ vim.cmd [[
     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200}) 
     autocmd BufWinEnter * :set formatoptions-=cro
     autocmd FileType qf set nobuflisted
+    autocmd CmdWinEnter * quit
   augroup end
 
   augroup _git
@@ -30,6 +31,9 @@ vim.cmd [[
   augroup end
 
 ]]
+-- autocmd BufLeave * if (!exists('b:caret')) | let b:caret = winsaveview() | endif
+-- autocmd BufEnter * if (exists('b:caret')) | call winrestview(b:caret) | endif
+
 -- Autoformat
 -- augroup _lsp
 --   autocmd!
