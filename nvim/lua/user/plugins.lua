@@ -177,6 +177,7 @@ return packer.startup(function(use)
   -- Me
   use "bamzi/bamzi-theme"
   use "mhinz/vim-startify"
+  use "azabiong/vim-highlighter" -- TODO: config later
 
   use "RRethy/vim-illuminate"
 
