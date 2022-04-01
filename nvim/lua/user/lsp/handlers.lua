@@ -134,8 +134,17 @@ end
 
 M.on_attach = function(client, bufnr)
   -- notify(client.name)
+  -- vim.notify(client.name .. " starting...")
   if client.name == "tsserver" or client.name == "html" then
     client.resolved_capabilities.document_formatting = false
+  end
+
+	--Maybe make lang specific
+  vim.lsp.codelens.refresh()
+
+  if client.name == "jdt.ls" then
+    require("jdtls").setup_dap { hotcodereplace = "auto" }
+    require("jdtls.dap").setup_dap_main_class_configs()
   end
   lsp_keymaps(bufnr)
   lsp_highlight_document(client)

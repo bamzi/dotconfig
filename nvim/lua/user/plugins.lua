@@ -48,6 +48,7 @@ return packer.startup(function(use)
   use "numToStr/Comment.nvim"
   use "kyazdani42/nvim-web-devicons"
   use "kyazdani42/nvim-tree.lua"
+  use "tamago324/lir.nvim"
   use "akinsho/bufferline.nvim"
   use "moll/vim-bbye"
   use "nvim-lualine/lualine.nvim"
@@ -71,7 +72,7 @@ return packer.startup(function(use)
   use "kevinhwang91/nvim-bqf"
   use "ThePrimeagen/harpoon"
   use "MattesGroeger/vim-bookmarks"
-  use "lunarvim/vim-solidity"
+  -- use "lunarvim/vim-solidity"
   use "blackCauldron7/surround.nvim"
   use "tpope/vim-repeat"
   use "Shatur/neovim-session-manager"
@@ -92,7 +93,7 @@ return packer.startup(function(use)
   use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "lunarvim/darkplus.nvim"
   use "rose-pine/neovim"
-  use "rebelot/kanagawa.nvim"
+  -- use "rebelot/kanagawa.nvim"
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin

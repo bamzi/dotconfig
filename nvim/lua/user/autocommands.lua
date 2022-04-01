@@ -29,6 +29,18 @@ vim.cmd [[
     autocmd!
     autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
   augroup end
+  
+  augroup illuminate_augroup
+    autocmd!
+    autocmd VimEnter * hi link illuminatedWord LspReferenceText
+  augroup END
+
+  augroup codelens
+    autocmd!
+    autocmd BufWritePost * lua vim.lsp.codelens.refresh() 
+  augroup END
+
+  autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
 ]]
 -- autocmd BufLeave * if (!exists('b:caret')) | let b:caret = winsaveview() | endif

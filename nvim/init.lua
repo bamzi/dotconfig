@@ -47,3 +47,8 @@ require "user.copilot"
 require "user.gps"
 require "user.illuminate"
 require "user.conflict-marker"
+require "user.dap"
+require "user.lir"
+vim.opt.laststatus = 3
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
