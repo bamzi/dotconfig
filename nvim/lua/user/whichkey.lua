@@ -105,7 +105,7 @@ local m_mappings = {
 local mappings = {
   -- ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["a"] = { "<cmd>Startify<cr>", "Startify" },
-  ["b"] = {
+  ["B"] = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Buffers",
   },
@@ -124,7 +124,7 @@ local mappings = {
   ["R"] = { '<cmd>lua require("renamer").rename()<cr>', "Rename" },
   ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
   ["gy"] = "Link",
-
+  b = { "<cmd>JABSOpen<cr>", "Buffers" },
   f = {
     name = "Find",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -161,6 +161,14 @@ local mappings = {
   -- require("dapui").open()
   -- require("dapui").close()
   -- require("dapui").toggle()
+  o = {
+    name = "Options",
+    w = { '<cmd>lua require("user.functions").toggle_option("wrap")<cr>', "Wrap" },
+    r = { '<cmd>lua require("user.functions").toggle_option("relativenumber")<cr>', "Relative" },
+    l = { '<cmd>lua require("user.functions").toggle_option("cursorline")<cr>', "Relative" },
+    s = { '<cmd>lua require("user.functions").toggle_option("spell")<cr>', "Relative" },
+  },
+
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },

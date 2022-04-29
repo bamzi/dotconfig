@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim",
     url = "https://github.com/antoinemadec/FixCursorHold.nvim"
   },
+  ["JABS.nvim"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/JABS.nvim",
+    url = "https://github.com/matbme/JABS.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -103,6 +108,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/alpha-nvim",
     url = "https://github.com/goolord/alpha-nvim"
+  },
+  ["bamzi-theme"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/bamzi-theme",
+    url = "https://github.com/bamzi/bamzi-theme"
   },
   ["bufferline.nvim"] = {
     loaded = true,
@@ -150,15 +160,15 @@ _G.packer_plugins = {
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["codi.vim"] = {
-    loaded = true,
-    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/codi.vim",
-    url = "https://github.com/metakirby5/codi.vim"
-  },
   colorschemes = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/colorschemes",
     url = "https://github.com/lunarvim/colorschemes"
+  },
+  ["conflict-marker.vim"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/conflict-marker.vim",
+    url = "https://github.com/rhysd/conflict-marker.vim"
   },
   ["copilot.vim"] = {
     loaded = true,
@@ -220,10 +230,10 @@ _G.packer_plugins = {
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/iswap.nvim",
     url = "https://github.com/mizlan/iswap.nvim"
   },
-  ["kanagawa.nvim"] = {
+  ["lir.nvim"] = {
     loaded = true,
-    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
-    url = "https://github.com/rebelot/kanagawa.nvim"
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/lir.nvim",
+    url = "https://github.com/tamago324/lir.nvim"
   },
   ["lsp_signature.nvim"] = {
     loaded = true,
@@ -251,11 +261,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/neovim",
     url = "https://github.com/rose-pine/neovim"
-  },
-  ["neovim-session-manager"] = {
-    loaded = true,
-    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/neovim-session-manager",
-    url = "https://github.com/Shatur/neovim-session-manager"
   },
   ["nlsp-settings.nvim"] = {
     loaded = true,
@@ -306,6 +311,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
     url = "https://github.com/theHamsta/nvim-dap-virtual-text"
+  },
+  ["nvim-gps"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/nvim-gps",
+    url = "https://github.com/SmiteshP/nvim-gps"
   },
   ["nvim-jdtls"] = {
     loaded = true,
@@ -360,7 +370,7 @@ _G.packer_plugins = {
   ["nvim-ts-rainbow"] = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow",
-    url = "https://github.com/ChristianChiarulli/nvim-ts-rainbow"
+    url = "https://github.com/p00f/nvim-ts-rainbow"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -406,6 +416,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/renamer.nvim",
     url = "https://github.com/filipdutescu/renamer.nvim"
+  },
+  sniprun = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/sniprun",
+    url = "https://github.com/michaelb/sniprun"
   },
   ["surround.nvim"] = {
     loaded = true,
@@ -480,15 +495,30 @@ _G.packer_plugins = {
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-gist",
     url = "https://github.com/mattn/vim-gist"
   },
+  ["vim-highlighter"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-highlighter",
+    url = "https://github.com/azabiong/vim-highlighter"
+  },
+  ["vim-illuminate"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-illuminate",
+    url = "https://github.com/RRethy/vim-illuminate"
+  },
   ["vim-matchup"] = {
     loaded = true,
     path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-matchup",
     url = "https://github.com/andymass/vim-matchup"
   },
-  ["vim-solidity"] = {
+  ["vim-repeat"] = {
     loaded = true,
-    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-solidity",
-    url = "https://github.com/lunarvim/vim-solidity"
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-repeat",
+    url = "https://github.com/tpope/vim-repeat"
+  },
+  ["vim-startify"] = {
+    loaded = true,
+    path = "/Users/bam/.local/share/nvim/site/pack/packer/start/vim-startify",
+    url = "https://github.com/mhinz/vim-startify"
   },
   ["webapi-vim"] = {
     loaded = true,
@@ -530,5 +560,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end

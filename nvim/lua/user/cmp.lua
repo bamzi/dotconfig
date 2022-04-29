@@ -16,101 +16,8 @@ local check_backspace = function()
 end
 
 local icons = require "user.icons"
+
 local kind_icons = icons.kind
-
--- https://github.com/microsoft/vscode/blob/main/src/vs/base/common/codicons.ts
--- go to the above and then enter <c-v>u<unicode> and the symbold should appear
--- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
---   project
---   bug
---   dashboard
---   history
---   comment
---   code
---   git add
---   git mod
---   git remove
---   git ignore
---   git rename
---   error
---   info
---   question
---   warning
---   lightbulb
---   diff
---   file
---   files
---   folder
---   open folder
---  circle
---   big circle
---   big unfilled
---  close
---   lock
---   new file
---   search
---   array
---   number
---   symbol misc
---   telescope
-
---   פּ ﯟ   蘒練 some other good icons
--- local kind_icons = {
---   Text = "",
---   Method = "m",
---   Function = "",
---   Constructor = "",
---   Field = "",
---   Variable = "",
---   Class = "",
---   Interface = "",
---   Module = "",
---   Property = "",
---   Unit = "",
---   Value = "",
---   Enum = "",
---   Keyword = "",
---   Snippet = "",
---   Color = "",
---   File = "",
---   Reference = "",
---   Folder = "",
---   EnumMember = "",
---   Constant = "",
---   Struct = "",
---   Event = "",
---   Operator = "",
---   TypeParameter = "",
--- }
-
-local kind_icons = {
-  Text = " ",
-  Method = " ",
-  Function = " ",
-  Constructor = " ",
-  Field = " ",
-  Variable = " ",
-  Class = " ",
-  Interface = " ",
-  Module = " ",
-  Property = " ",
-  Unit = " ",
-  Value = " ",
-  Enum = " ",
-  Keyword = " ",
-  Snippet = " ",
-  Color = " ",
-  File = " ",
-  Reference = " ",
-  Folder = " ",
-  EnumMember = " ",
-  Constant = " ",
-  Struct = " ",
-  Event = " ",
-  Operator = " ",
-  TypeParameter = " ",
-}
--- find more here: https://www.nerdfonts.com/cheat-sheet
 
 cmp.setup {
   snippet = {
@@ -118,7 +25,7 @@ cmp.setup {
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
@@ -132,7 +39,7 @@ cmp.setup {
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<C-Tab>"] = cmp.mapping(function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expandable() then
@@ -169,9 +76,8 @@ cmp.setup {
 
       if entry.source.name == "cmp_tabnine" then
         -- if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-          -- menu = entry.completion_item.data.detail .. " " .. menu
+        -- menu = entry.completion_item.data.detail .. " " .. menu
         -- end
-        -- vim_item.kind = " "
         vim_item.kind = icons.misc.Robot
       end
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
@@ -207,12 +113,18 @@ cmp.setup {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
-  documentation = true,
-  documentation = {
-  	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  -- documentation = true,
+  window = {
+    -- documentation = "native",
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
   },
+  -- documentation = {
+  -- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  -- },
   experimental = {
     ghost_text = true,
-    native_menu = false,
+    -- native_menu = false,
   },
 }

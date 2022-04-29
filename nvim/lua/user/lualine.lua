@@ -112,3 +112,4 @@ lualine.setup {
   tabline = {},
   extensions = {},
 }
+vim.opt.laststatus = 3

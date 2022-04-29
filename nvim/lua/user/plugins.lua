@@ -47,7 +47,7 @@ return packer.startup(function(use)
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
   use "numToStr/Comment.nvim"
   use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua"
+  use { "kyazdani42/nvim-tree.lua" }
   use "tamago324/lir.nvim"
   use "akinsho/bufferline.nvim"
   use "moll/vim-bbye"
@@ -73,9 +73,9 @@ return packer.startup(function(use)
   use "ThePrimeagen/harpoon"
   use "MattesGroeger/vim-bookmarks"
   -- use "lunarvim/vim-solidity"
-  use "blackCauldron7/surround.nvim"
+  use "Mephistophiles/surround.nvim"
   use "tpope/vim-repeat"
-  use "Shatur/neovim-session-manager"
+  -- use "Shatur/neovim-session-manager"
   use "rcarriga/nvim-notify"
   use "tversteeg/registers.nvim"
   -- use "metakirby5/codi.vim"
@@ -87,6 +87,7 @@ return packer.startup(function(use)
     run = "cd app && npm install",
     ft = "markdown",
   }
+  use "matbme/JABS.nvim"
 
   -- Colorschemes
   use "folke/tokyonight.nvim"
@@ -112,6 +113,12 @@ return packer.startup(function(use)
         max_lines = 1000,
         max_num_results = 20,
         sort = true,
+        run_on_every_keystroke = true,
+        snippet_placeholder = "..",
+        ignored_file_types = { -- default is not to ignore
+          -- uncomment to ignore in lua:
+          -- lua = true
+        },
       }
     end,
 
