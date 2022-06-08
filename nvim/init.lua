@@ -1,4 +1,3 @@
-require "user.options"
 require "user.keymaps"
 require "user.plugins"
 require "user.autocommands"
@@ -50,6 +49,11 @@ require "user.conflict-marker"
 require "user.dap"
 require "user.lir"
 require "user.jabs"
+require "user.winbar"
+require "user.cybu"
+require "user.nvim-webdev-icons"
+require "user.options"
+
 -- vim.opt.laststatus = 3
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

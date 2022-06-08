@@ -1,14 +1,23 @@
+-- vim.api.nvim_create_autocmd({ "User" }, {
+--   pattern = { "AlphaReady" },
+--   callback = function()
+--     vim.cmd [[
+--       set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
+--     ]]
+--   end,
+-- })
+
 vim.api.nvim_create_autocmd({ "User" }, {
   pattern = { "AlphaReady" },
   callback = function()
     vim.cmd [[
-      set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
+      set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3
     ]]
   end,
 })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel" },
+  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir" },
   callback = function()
     vim.cmd [[
       nnoremap <silent> <buffer> q :close<CR> 
@@ -20,20 +29,27 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "gitcommit", "markdown" },
   callback = function()
-    vim.cmd [[
-      setlocal wrap
-      setlocal spell
-    ]]
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "lir" },
   callback = function()
-    vim.cmd [[
-      if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
-    ]]
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
   end,
 })
+
+vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
+-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+--   callback = function()
+--     vim.cmd [[
+--       if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+--     ]]
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd({ "VimResized" }, {
   callback = function()
@@ -46,6 +62,12 @@ vim.api.nvim_create_autocmd({ "CmdWinEnter" }, {
     vim.cmd "quit"
   end,
 })
+
+--vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+--  callback = function()
+--    require("user.winbar").get_winbar()
+--  end,
+--})
 
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
   callback = function()

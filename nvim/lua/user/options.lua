@@ -51,6 +51,7 @@ local options = {
   spell = false,
 }
 
+vim.opt.fillchars.eob=" "
 vim.opt.shortmess:append "c"
 
 for k, v in pairs(options) do
@@ -61,3 +62,9 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd "set noswapfile"
 vim.cmd [[set iskeyword+=-]]
 vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
+
+vim.filetype.add({
+    extension = {
+      conf = "dosini",
+  },
+})

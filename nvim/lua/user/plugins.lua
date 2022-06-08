@@ -87,7 +87,20 @@ return packer.startup(function(use)
     run = "cd app && npm install",
     ft = "markdown",
   }
-  use "matbme/JABS.nvim"
+  -- use "matbme/JABS.nvim"
+  use {
+    "christianchiarulli/JABS.nvim",
+    requires = { "kyazdani42/nvim-web-devicons" }, --optional
+  }
+
+  use {
+    "ghillb/cybu.nvim",
+    branch = "v1.x", -- won't receive breaking changes
+    -- branch = "main", -- timely updates
+    requires = { "kyazdani42/nvim-web-devicons" }, --optional
+  }
+
+
 
   -- Colorschemes
   use "folke/tokyonight.nvim"
@@ -105,6 +118,7 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-emoji"
   use "hrsh7th/cmp-nvim-lua"
+  use "rcarriga/cmp-dap"
   use {
     "tzachar/cmp-tabnine",
     config = function()
