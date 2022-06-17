@@ -52,6 +52,7 @@ require "user.jabs"
 require "user.winbar"
 require "user.cybu"
 require "user.nvim-webdev-icons"
+require "user.trouble"
 require "user.options"
 
 -- vim.opt.laststatus = 3

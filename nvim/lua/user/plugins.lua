@@ -156,7 +156,7 @@ return packer.startup(function(use)
   use "b0o/SchemaStore.nvim"
   use {
     "folke/trouble.nvim",
-    cmd = "TroubleToggle",
+	 requires = "kyazdani42/nvim-web-devicons",
   }
   use "github/copilot.vim"
 
@@ -200,9 +200,9 @@ return packer.startup(function(use)
   use "bamzi/bamzi-theme"
   use "mhinz/vim-startify"
   use "azabiong/vim-highlighter" -- TODO: config later
-
+  use "rebelot/kanagawa.nvim"
   use "RRethy/vim-illuminate"
-
+  use "darrikonn/vim-gofmt"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
